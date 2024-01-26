@@ -1,15 +1,15 @@
 import React, { useState, useContext } from "react";
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-// import IncorrectLoginModal from "../components/IncorrectLoginModal";
-// import { LoginContext } from "../App";
+import IncorrectLoginModal from "../components/IncorrectLoginModal";
+import { LoginContext } from "../App";
 
 const SignIn = () => {
-  // const { setUserId, setArtistOrVenue } = useContext(LoginContext);
+  const { userId, setUserId, artistOrVenue, setArtistOrVenue } =
+    useContext(LoginContext);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [artistOrVenue, setArtistOrVenue] = useState("A"); // Assuming default is artist
   const [showModal, setShowModal] = useState(false);
 
   const handleCloseModal = () => setShowModal(false);
@@ -25,11 +25,18 @@ const SignIn = () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          // Handle server errors (e.g., 404)
+          throw new Error("Invalid credentials");
+        }
+        return response.json();
+      })
       .then((data) => {
         setUserId(data.id);
         setArtistOrVenue(artistOrVenue);
-        console.log(localStorage);
+        console.log("User ID:", data.id);
+        console.log("Artist or Venue:", artistOrVenue);
 
         if (data.id != null) {
           if (artistOrVenue === "A") {
@@ -38,8 +45,12 @@ const SignIn = () => {
             // Navigate logic for React Navigation or any navigation library you use in React Native
           }
         } else {
-          handleShowModal();
+          handleShowModal(); // Show modal for incorrect login
         }
+      })
+      .catch((error) => {
+        console.error("Error:", error.message);
+        handleShowModal(); // Show modal for incorrect login
       });
   };
 

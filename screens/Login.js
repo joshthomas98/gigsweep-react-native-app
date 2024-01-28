@@ -2,15 +2,16 @@ import React, { useState, useContext } from "react";
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import IncorrectLoginModal from "../components/IncorrectLoginModal";
+import { useNavigation } from "@react-navigation/native";
 import LoginContext from "../LoginContext";
 
 const Login = () => {
   const { userId, setUserId, artistOrVenue, setArtistOrVenue } =
     useContext(LoginContext);
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const navigation = useNavigation();
 
   const handleCloseModal = () => setShowModal(false);
   const handleShowModal = () => setShowModal(true);
@@ -20,6 +21,10 @@ const Login = () => {
       artistOrVenue === "A"
         ? "http://localhost:8000/artists/validate/"
         : "http://localhost:8000/venues/validate/";
+    if (!artistOrVenue) {
+      // If artistOrVenue is not yet defined, return or handle the case accordingly
+      return;
+    }
     fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -27,7 +32,6 @@ const Login = () => {
     })
       .then((response) => {
         if (!response.ok) {
-          // Handle server errors (e.g., 404)
           throw new Error("Invalid credentials");
         }
         return response.json();
@@ -35,22 +39,20 @@ const Login = () => {
       .then((data) => {
         setUserId(data.id);
         setArtistOrVenue(artistOrVenue);
-        console.log("User ID:", data.id);
-        console.log("Artist or Venue:", artistOrVenue);
 
         if (data.id != null) {
           if (artistOrVenue === "A") {
-            // Navigate logic for React Navigation or any navigation library you use in React Native
+            navigation.navigate("Main", { screen: "Home" }); // Navigate to Home screen in MainStack
           } else if (artistOrVenue === "V") {
-            // Navigate logic for React Navigation or any navigation library you use in React Native
+            navigation.navigate("Main", { screen: "Home" });
           }
         } else {
-          handleShowModal(); // Show modal for incorrect login
+          handleShowModal();
         }
       })
       .catch((error) => {
         console.error("Error:", error.message);
-        handleShowModal(); // Show modal for incorrect login
+        handleShowModal();
       });
   };
 

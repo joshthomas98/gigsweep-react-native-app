@@ -2,9 +2,9 @@ import React, { useState, useContext } from "react";
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import IncorrectLoginModal from "../components/IncorrectLoginModal";
-import { LoginContext } from "../App";
+import LoginContext from "../LoginContext";
 
-const SignIn = () => {
+const Login = () => {
   const { userId, setUserId, artistOrVenue, setArtistOrVenue } =
     useContext(LoginContext);
 
@@ -15,7 +15,7 @@ const SignIn = () => {
   const handleCloseModal = () => setShowModal(false);
   const handleShowModal = () => setShowModal(true);
 
-  const handleSignIn = () => {
+  const handleLogin = () => {
     const url =
       artistOrVenue === "A"
         ? "http://localhost:8000/artists/validate/"
@@ -110,8 +110,8 @@ const SignIn = () => {
               </TouchableOpacity>
             </View>
 
-            <TouchableOpacity style={styles.button} onPress={handleSignIn}>
-              <Text style={styles.buttonText}>Sign In</Text>
+            <TouchableOpacity style={styles.button} onPress={handleLogin}>
+              <Text style={styles.buttonText}>Login</Text>
             </TouchableOpacity>
 
             {showModal && (
@@ -196,4 +196,4 @@ const styles = {
   },
 };
 
-export default SignIn;
+export default Login;

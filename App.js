@@ -1,8 +1,8 @@
-import React, { createContext, useState } from "react";
+// App.js
+import React, { useState } from "react";
 import { StatusBar } from "react-native";
 import AuthStack from "./navigation/stack/AuthStack";
-
-export const LoginContext = createContext();
+import LoginContext from "./LoginContext";
 
 const App = () => {
   const [userId, setUserId] = useState(null);

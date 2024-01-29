@@ -1,25 +1,52 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 
 const MembershipPlans = () => {
-  const [membershipOptions, setMembershipOptions] = useState([]);
   const [selectedButton, setSelectedButton] = useState(null);
 
-  useEffect(() => {
-    const fetchMembershipOptions = async () => {
-      try {
-        const response = await fetch(
-          "http://localhost:8000/membershipoptions/"
-        );
-        const data = await response.json();
-        setMembershipOptions(data);
-        console.log(data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchMembershipOptions();
-  }, []);
+  // Hard-coded membership options
+  const membershipOptions = [
+    {
+      id: 1,
+      type_of_user: "Artist",
+      title: "Standard",
+      description:
+        "Advertise unplayable gigs for other artists to pick up\nSearch and apply for gigs based on your criteria\nPromote music, connect with other artists\nSee reviews of venues before you agree to play\nManage gig records and prevent double booking\nTime-saving booking process",
+      price: "Price: FREE",
+      disclosure:
+        "No contracts, no commitments, cancel at anytime. Membership is in the form of a rolling monthly subscription.",
+    },
+    {
+      id: 2,
+      type_of_user: "Venue",
+      title: "Standard",
+      description:
+        "List gigs and let artists apply to play.\nDiscover local and national talent easily.\nContact artists and notify fans of upcoming gigs.\nProvide feedback on artists you've had perform\nRecord keeping system to prevent double booking\nTime-saving booking process",
+      price: "Price: FREE",
+      disclosure:
+        "No contracts, no commitments, cancel at anytime. Membership is in the form of a rolling monthly subscription.",
+    },
+    {
+      id: 3,
+      type_of_user: "Artist",
+      title: "Pro",
+      description:
+        "Early email notifications for new gigs.\nIncreased homepage exposure as a featured artist.\nVerified bluetick for credibility and more visits.\nImproved chances of getting booked\nIncreased exposure for your music",
+      price: "Price: £4.49 per month",
+      disclosure:
+        "No contracts, no commitments, cancel at anytime. Membership is in the form of a rolling monthly subscription.",
+    },
+    {
+      id: 4,
+      type_of_user: "Venue",
+      title: "Pro",
+      description:
+        "Email notifications about local artists and availability.\nPriority placement in artist search results.\nVerified bluetick for credibility and more visits.\nRecommendations of artists you may want to book.\nIncreased exposure for your venue",
+      price: "Price: £7.49 per month",
+      disclosure:
+        "No contracts, no commitments, cancel at anytime. Membership is in the form of a rolling monthly subscription.",
+    },
+  ];
 
   const handleClick = (buttonId) => {
     setSelectedButton(buttonId);
@@ -57,31 +84,41 @@ const MembershipPlans = () => {
           STEP 1 OF 3: Select your membership type
         </Text>
         <Text style={{ fontSize: 18, marginBottom: 20 }}>
-          See our different membership options
+          See our different membership options:
         </Text>
-        {membershipOptions.map((membership) => (
+        {membershipOptions.map((membership, index) => (
           <View key={membership.id}>
             <Text
-              style={{ fontSize: 20, fontWeight: "bold", marginBottom: 10 }}
+              style={{
+                fontSize: 20,
+                fontWeight: "bold",
+                marginBottom: 10,
+              }}
             >
-              {membership.type_of_user}
+              {membership.type_of_user} {membership.title}
             </Text>
-            <Text style={{ fontSize: 18, marginBottom: 10 }}>
-              {membership.title}
+            <Text style={{ fontSize: 18 }}>
+              {membership.description.split("\n").map((item, key) => (
+                <Text key={key}>
+                  {item}
+                  {"\n\n"}
+                </Text> // Add an extra line of space between lines
+              ))}
             </Text>
-            <Text style={{ fontSize: 16, marginBottom: 10 }}>
-              {membership.id === 1 || membership.id === 2
-                ? "GigSweep Standard benefits:"
-                : membership.id === 3 || membership.id === 4
-                ? "GigSweep Pro benefits:"
-                : "Invalid membership option"}
-            </Text>
-            <Text>{membership.description}</Text>
-            <Text style={{ fontSize: 18, marginTop: 10 }}>
+            <Text style={{ fontSize: 18, marginBottom: 15 }}>
               {membership.price}
             </Text>
-            <Text>{membership.disclosure}</Text>
+            <Text style={{ marginBottom: 10 }}>{membership.disclosure}</Text>
             {renderButton(membership)}
+            {index !== membershipOptions.length - 1 && (
+              <View
+                style={{
+                  borderBottomWidth: 1,
+                  borderBottomColor: "lightgray",
+                  marginVertical: 20,
+                }}
+              />
+            )}
           </View>
         ))}
       </View>

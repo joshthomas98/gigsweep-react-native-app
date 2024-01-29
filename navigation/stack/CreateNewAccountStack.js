@@ -8,7 +8,7 @@ const Stack = createStackNavigator();
 const CreateNewAccountStack = () => {
   return (
     <Stack.Navigator initialRouteName="Welcome">
-      <Stack.Screen name="Welcome" component={WelcomeScreen} />
+      {/* <Stack.Screen name="Welcome" component={WelcomeScreen} /> */}
       <Stack.Screen name="MembershipPlans" component={MembershipPlans} />
     </Stack.Navigator>
   );

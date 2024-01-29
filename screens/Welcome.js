@@ -7,6 +7,10 @@ const WelcomeScreen = ({ navigation }) => {
     navigation.navigate("Login");
   };
 
+  const goToCreateNewAccount = () => {
+    navigation.navigate("CreateNewAccount");
+  };
+
   return (
     <View style={globalStyles.container}>
       <View style={styles.logoContainer}>
@@ -22,7 +26,7 @@ const WelcomeScreen = ({ navigation }) => {
 
         <TouchableOpacity
           style={styles.createNewAccountButton}
-          onPress={goToLogin}
+          onPress={goToCreateNewAccount}
         >
           <Text style={styles.createNewAccountButtonText}>
             Create New Account

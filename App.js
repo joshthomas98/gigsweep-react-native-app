@@ -4,6 +4,10 @@ import { NavigationContainer } from "@react-navigation/native";
 import AuthStack from "./navigation/stack/AuthStack";
 import MainStack from "./navigation/bottom tab/MainStack";
 import LoginContext from "./LoginContext";
+import { createStackNavigator } from "@react-navigation/stack";
+import CreateNewAccountStack from "./navigation/stack/CreateNewAccountStack";
+
+const Stack = createStackNavigator();
 
 const App = () => {
   const [userId, setUserId] = useState(null);
@@ -28,9 +32,21 @@ const App = () => {
       {/* Set the background color and text color for the status bar */}
       <StatusBar backgroundColor="#121212" barStyle="dark-content" />
 
-      {/* Conditionally render the appropriate navigation stack based on user authentication status */}
+      {/* Render the appropriate navigation stack based on user authentication status */}
       <NavigationContainer>
-        {userId ? <MainStack /> : <AuthStack />}
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+          {userId ? (
+            <Stack.Screen name="Main" component={MainStack} />
+          ) : (
+            <>
+              <Stack.Screen name="Auth" component={AuthStack} />
+              <Stack.Screen
+                name="CreateNewAccount"
+                component={CreateNewAccountStack}
+              />
+            </>
+          )}
+        </Stack.Navigator>
       </NavigationContainer>
     </LoginContext.Provider>
   );

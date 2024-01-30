@@ -6,6 +6,8 @@ import { useNavigation } from "@react-navigation/native";
 import WelcomeScreen from "../../screens/Welcome";
 import MembershipPlans from "../../screens/MembershipPlans";
 import { Ionicons } from "@expo/vector-icons";
+import ArtistRegister from "../../screens/ArtistRegister";
+import VenueRegister from "../../screens/VenueRegister";
 
 const Stack = createStackNavigator();
 
@@ -48,6 +50,36 @@ const CreateNewAccountStack = () => {
             </TouchableOpacity>
           ),
         }}
+      />
+      <Stack.Screen
+        name="ArtistRegister"
+        component={ArtistRegister}
+        options={({ navigation }) => ({
+          title: "Artist Register",
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={() => navigation.goBack()}
+              style={{ marginLeft: 10 }}
+            >
+              <Ionicons name="arrow-back" size={24} color="black" />
+            </TouchableOpacity>
+          ),
+        })}
+      />
+      <Stack.Screen
+        name="VenueRegister"
+        component={VenueRegister}
+        options={({ navigation }) => ({
+          title: "Venue Register",
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={() => navigation.goBack()}
+              style={{ marginLeft: 10 }}
+            >
+              <Ionicons name="arrow-back" size={24} color="black" />
+            </TouchableOpacity>
+          ),
+        })}
       />
     </Stack.Navigator>
   );

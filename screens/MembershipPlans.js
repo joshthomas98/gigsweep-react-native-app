@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { View, Text, ScrollView, TouchableOpacity } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 const MembershipPlans = () => {
+  const navigation = useNavigation();
   const [selectedButton, setSelectedButton] = useState(null);
 
   // Hard-coded membership options
@@ -50,7 +52,13 @@ const MembershipPlans = () => {
 
   const handleClick = (buttonId) => {
     setSelectedButton(buttonId);
-    // Handle navigation based on buttonId
+
+    // Determine the screen to navigate based on buttonId
+    if (buttonId === 1 || buttonId === 3) {
+      navigation.navigate("ArtistRegister"); // Navigate to ArtistRegister screen
+    } else if (buttonId === 2 || buttonId === 4) {
+      navigation.navigate("VenueRegister"); // Navigate to VenueRegister screen
+    }
   };
 
   const renderButton = (membership) => {

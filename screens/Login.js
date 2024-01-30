@@ -16,6 +16,10 @@ const Login = () => {
   const handleCloseModal = () => setShowModal(false);
   const handleShowModal = () => setShowModal(true);
 
+  const goToCreateNewAccount = () => {
+    navigation.navigate("CreateNewAccount");
+  };
+
   const handleLogin = () => {
     const url =
       artistOrVenue === "A"
@@ -128,7 +132,10 @@ const Login = () => {
         <View style={{ alignItems: "center" }}>
           <Text>New to GigSweep?</Text>
 
-          <TouchableOpacity style={styles.createNewAccountButton}>
+          <TouchableOpacity
+            style={styles.createNewAccountButton}
+            onPress={goToCreateNewAccount}
+          >
             <Text style={styles.createNewAccountButtonText}>
               Create New Account
             </Text>

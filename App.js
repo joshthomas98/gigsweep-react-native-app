@@ -39,7 +39,8 @@ const App = () => {
             <Stack.Screen name="Main" component={MainStack} />
           ) : (
             <>
-              <Stack.Screen name="Auth" component={AuthStack} />
+              {/* Change the name from "Auth" to "Welcome" */}
+              <Stack.Screen name="Welcome" component={AuthStack} />
               <Stack.Screen
                 name="CreateNewAccount"
                 component={CreateNewAccountStack}

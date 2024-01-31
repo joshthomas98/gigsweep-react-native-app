@@ -3,7 +3,7 @@ import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import IncorrectLoginModal from "../components/IncorrectLoginModal";
 import { useNavigation } from "@react-navigation/native";
-import LoginContext from "../LoginContext";
+import LoginContext from "../contexts/LoginContext";
 
 const Login = () => {
   const { userId, setUserId, artistOrVenue, setArtistOrVenue } =

@@ -8,6 +8,7 @@ import MembershipPlans from "../../screens/MembershipPlans";
 import { Ionicons } from "@expo/vector-icons";
 import ArtistRegister from "../../screens/ArtistRegister";
 import VenueRegister from "../../screens/VenueRegister";
+import UserCreated from "../../screens/UserCreated";
 
 const Stack = createStackNavigator();
 
@@ -71,6 +72,21 @@ const CreateNewAccountStack = () => {
         component={VenueRegister}
         options={({ navigation }) => ({
           title: "Venue Register",
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={() => navigation.goBack()}
+              style={{ marginLeft: 10 }}
+            >
+              <Ionicons name="arrow-back" size={24} color="black" />
+            </TouchableOpacity>
+          ),
+        })}
+      />
+      <Stack.Screen
+        name="UserCreated"
+        component={UserCreated}
+        options={({ navigation }) => ({
+          title: "User Created",
           headerLeft: () => (
             <TouchableOpacity
               onPress={() => navigation.goBack()}

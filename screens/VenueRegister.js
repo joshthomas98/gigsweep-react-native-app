@@ -1,101 +1,60 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
   TextInput,
   Button,
-  Alert,
-  Image,
   ScrollView,
   StyleSheet,
   TouchableOpacity,
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
-import * as ImagePicker from "expo-image-picker";
-import Constants from "expo-constants";
 import CountyData from "../components/CountyData";
 
-const VenueRegister = () => {
+const VenueRegister = ({ navigation }) => {
+  const goToUserCreated = () => {
+    navigation.navigate("UserCreated");
+  };
+
   const [venueName, setVenueName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [address, setAddress] = useState("");
   const [bio, setBio] = useState("");
   const [country, setCountry] = useState("");
   const [county, setCounty] = useState("");
   const [typeOfAct, setTypeOfAct] = useState(null);
+  const [userType, setUserType] = useState("Venue");
   const [facebook, setFacebook] = useState("");
   const [twitter, setTwitter] = useState("");
   const [youtube, setYoutube] = useState("");
-  const [image, setImage] = useState(null);
 
   const [showCountryPicker, setShowCountryPicker] = useState(false);
   const [showCountyPicker, setShowCountyPicker] = useState(false);
   const [showTypeOfActPicker, setShowTypeOfActPicker] = useState(false);
 
-  useEffect(() => {
-    // Ask for camera roll permission when component mounts
-    getPermissionAsync();
-  }, []);
-
-  const getPermissionAsync = async () => {
-    if (Constants.platform.ios || Constants.platform.android) {
-      const { status } =
-        await ImagePicker.requestMediaLibraryPermissionsAsync();
-      if (status !== "granted") {
-        Alert.alert(
-          "Sorry, we need camera roll permissions to make this work!"
-        );
-      }
-    }
+  const handleCountryChange = (selectedCountry) => {
+    setCountry(selectedCountry);
+    setCounty(""); // Reset county when country changes
   };
 
-  const pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-
-    if (!result.cancelled) {
-      setImage(result.uri);
-    }
-  };
-
+  // Handle form submission
   const handleSubmit = () => {
-    console.log("Venue Name:", venueName);
-    console.log("Email:", email);
-    console.log("Password:", password);
-    console.log("Phone Number:", phoneNumber);
-    console.log("Bio:", bio);
-    console.log("Country:", country);
-    console.log("County:", county);
-    console.log("Type of Act:", typeOfAct);
-    console.log("Facebook:", facebook);
-    console.log("Twitter:", twitter);
-    console.log("Youtube:", youtube);
-
-    // Handle form submission
     // Create a FormData object
     const formData = new FormData();
-
-    // Append the image file to the FormData object
-    formData.append("image", {
-      uri: image,
-      name: "profile.jpg",
-      type: "image/jpg",
-    });
 
     // Append other data fields to the FormData object
     formData.append("venue_name", venueName);
     formData.append("email", email);
     formData.append("password", password);
     formData.append("phone_number", phoneNumber);
+    formData.append("address", address);
     formData.append("bio", bio);
     formData.append("country", country);
     formData.append("county", county);
     formData.append("type_of_act", typeOfAct);
+    formData.append("user_type", userType);
     formData.append("facebook", facebook);
     formData.append("twitter", twitter);
     formData.append("youtube", youtube);
@@ -107,18 +66,15 @@ const VenueRegister = () => {
     })
       .then((response) => {
         if (response.ok) {
-          // Handle success
           console.log("User registered successfully");
+          goToUserCreated();
+        } else {
+          console.error("Error registering user:", response.status);
         }
       })
       .catch((error) => {
         console.error("Error registering user:", error);
       });
-  };
-
-  const handleCountryChange = (selectedCountry) => {
-    setCountry(selectedCountry);
-    setCounty(""); // Reset county when country changes
   };
 
   return (
@@ -157,6 +113,14 @@ const VenueRegister = () => {
           placeholder="Enter your phone number here"
           value={phoneNumber}
           onChangeText={(text) => setPhoneNumber(text)}
+        />
+
+        <Text style={styles.label}>Address:</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Enter your venue address here"
+          value={address}
+          onChangeText={(text) => setAddress(text)}
         />
 
         <Text style={styles.label}>Bio:</Text>
@@ -266,9 +230,6 @@ const VenueRegister = () => {
           value={youtube}
           onChangeText={(text) => setYoutube(text)}
         />
-
-        <Button title="Pick an image from camera roll" onPress={pickImage} />
-        {image && <Image source={{ uri: image }} style={styles.image} />}
       </ScrollView>
       <Button title="Sign up" onPress={handleSubmit} />
     </View>
@@ -296,11 +257,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginBottom: 20,
     paddingHorizontal: 10,
-  },
-  image: {
-    width: 200,
-    height: 200,
-    marginBottom: 20,
   },
   picker: {
     marginBottom: 20,

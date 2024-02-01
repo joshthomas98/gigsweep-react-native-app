@@ -1,22 +1,21 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
   TextInput,
   Button,
-  Alert,
-  Image,
   ScrollView,
   StyleSheet,
   TouchableOpacity,
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
-import * as ImagePicker from "expo-image-picker";
 import Constants from "expo-constants";
-import LoginContext from "../contexts/LoginContext";
+import CountyData from "../components/CountyData";
 
-const ArtistRegister = () => {
-  const { userId, setUserId } = useContext(LoginContext);
+const ArtistRegister = ({ navigation }) => {
+  const goToUserCreated = () => {
+    navigation.navigate("UserCreated");
+  };
 
   const [artistName, setArtistName] = useState("");
   const [email, setEmail] = useState("");
@@ -28,57 +27,25 @@ const ArtistRegister = () => {
   const [country, setCountry] = useState("");
   const [county, setCounty] = useState("");
   const [typeOfArtist, setTypeOfArtist] = useState("");
+  const [userType, setUserType] = useState("Artist");
   const [facebook, setFacebook] = useState("");
   const [twitter, setTwitter] = useState("");
   const [youtube, setYoutube] = useState("");
-  const [image, setImage] = useState(null);
 
   const [showGenrePicker, setShowGenrePicker] = useState(false);
   const [showCountryPicker, setShowCountryPicker] = useState(false);
   const [showCountyPicker, setShowCountyPicker] = useState(false);
   const [showTypeOfArtistPicker, setShowTypeOfArtistPicker] = useState(false);
 
-  useEffect(() => {
-    // Ask for camera roll permission when component mounts
-    getPermissionAsync();
-  }, []);
-
-  const getPermissionAsync = async () => {
-    if (Constants.platform.ios || Constants.platform.android) {
-      const { status } =
-        await ImagePicker.requestMediaLibraryPermissionsAsync();
-      if (status !== "granted") {
-        Alert.alert(
-          "Sorry, we need camera roll permissions to make this work!"
-        );
-      }
-    }
+  const handleCountryChange = (selectedCountry) => {
+    setCountry(selectedCountry);
+    setCounty(""); // Reset county when country changes
   };
 
-  const pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-
-    if (!result.cancelled) {
-      setImage(result.uri);
-    }
-  };
-
+  // Handle form submission
   const handleSubmit = () => {
-    // Handle form submission
     // Create a FormData object
     const formData = new FormData();
-
-    // Append the image file to the FormData object
-    formData.append("image", {
-      uri: image,
-      name: "profile.jpg",
-      type: "image/jpg",
-    });
 
     // Append other data fields to the FormData object
     formData.append("artist_name", artistName);
@@ -90,13 +57,14 @@ const ArtistRegister = () => {
     formData.append("genre", genre);
     formData.append("country", country);
     formData.append("county", county);
-    formData.append("type_of_artist", typeOfArtist);
+    formData.append("type_of_Artist", typeOfArtist);
+    formData.append("user_type", userType);
     formData.append("facebook", facebook);
     formData.append("twitter", twitter);
     formData.append("youtube", youtube);
 
     // Send the FormData object in the request
-    fetch("http://localhost:8000/artists/", {
+    fetch("http://localhost:8000/venues/", {
       method: "POST",
       body: formData,
     })
@@ -104,6 +72,7 @@ const ArtistRegister = () => {
         if (response.ok) {
           // Handle success
           console.log("User registered successfully");
+          goToUserCreated();
         }
       })
       .catch((error) => {
@@ -187,16 +156,6 @@ const ArtistRegister = () => {
             <Picker.Item label="Rock" value="Rock" />
             <Picker.Item label="Pop" value="Pop" />
             <Picker.Item label="Jazz" value="Jazz" />
-            <Picker.Item label="Country" value="Country" />
-            <Picker.Item label="Hip Hop" value="Hip Hop" />
-            <Picker.Item label="R&B" value="R&B" />
-            <Picker.Item label="Electronic" value="Electronic" />
-            <Picker.Item label="Classical" value="Classical" />
-            <Picker.Item label="Reggae" value="Reggae" />
-            <Picker.Item label="Metal" value="Metal" />
-            <Picker.Item label="Folk" value="Folk" />
-            <Picker.Item label="Blues" value="Blues" />
-            <Picker.Item label="World Music" value="World Music" />
           </Picker>
         )}
 
@@ -214,10 +173,11 @@ const ArtistRegister = () => {
             style={styles.picker}
             selectedValue={country}
             onValueChange={(itemValue) => {
-              setCountry(itemValue);
+              handleCountryChange(itemValue);
               setShowCountryPicker(false);
             }}
           >
+            <Picker.Item label="Select a country" value="" />
             <Picker.Item label="England" value="England" />
             <Picker.Item label="Wales" value="Wales" />
             <Picker.Item label="Scotland" value="Scotland" />
@@ -225,7 +185,55 @@ const ArtistRegister = () => {
           </Picker>
         )}
 
-        {/* Repeat the above pattern for other pickers */}
+        <Text style={styles.label}>County:</Text>
+        <TouchableOpacity
+          style={styles.input}
+          onPress={() => setShowCountyPicker(true)}
+        >
+          <Text style={[styles.label, { marginTop: 9 }]}>
+            {county || "Select a county"}
+          </Text>
+        </TouchableOpacity>
+        {showCountyPicker && (
+          <Picker
+            style={styles.picker}
+            selectedValue={county}
+            onValueChange={(itemValue) => {
+              setCounty(itemValue);
+              setShowCountyPicker(false);
+            }}
+          >
+            {/* Map over CountyData for selected country here */}
+            {CountyData[country]?.map((countyName, index) => (
+              <Picker.Item key={index} label={countyName} value={countyName} />
+            ))}
+          </Picker>
+        )}
+
+        <Text style={styles.label}>Type of Artist:</Text>
+        <TouchableOpacity
+          style={styles.input}
+          onPress={() => setShowTypeOfArtistPicker(true)}
+        >
+          <Text style={[styles.label, { marginTop: 9 }]}>
+            {typeOfArtist || "Select type of artist"}
+          </Text>
+        </TouchableOpacity>
+        {showTypeOfArtistPicker && (
+          <Picker
+            style={styles.picker}
+            selectedValue={typeOfArtist}
+            onValueChange={(itemValue) => {
+              setTypeOfArtist(itemValue);
+              setShowTypeOfArtistPicker(false);
+            }}
+          >
+            <Picker.Item label="Select artist type:" value="" />
+            <Picker.Item label="Full band" value="Full band" />
+            <Picker.Item label="Solo artist" value="Solo artist" />
+            <Picker.Item label="Duo" value="Duo" />
+          </Picker>
+        )}
 
         <Text style={styles.label}>Facebook:</Text>
         <TextInput
@@ -250,9 +258,6 @@ const ArtistRegister = () => {
           value={youtube}
           onChangeText={(text) => setYoutube(text)}
         />
-
-        <Button title="Pick an image from camera roll" onPress={pickImage} />
-        {image && <Image source={{ uri: image }} style={styles.image} />}
       </ScrollView>
       <Button title="Sign up" onPress={handleSubmit} />
     </View>
@@ -280,11 +285,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginBottom: 20,
     paddingHorizontal: 10,
-  },
-  image: {
-    width: 200,
-    height: 200,
-    marginBottom: 20,
   },
   picker: {
     marginBottom: 20,

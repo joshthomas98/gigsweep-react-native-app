@@ -55,9 +55,9 @@ const MembershipPlans = () => {
 
     // Determine the screen to navigate based on buttonId
     if (buttonId === 1 || buttonId === 3) {
-      navigation.navigate("ArtistRegister"); // Navigate to ArtistRegister screen
+      navigation.navigate("ArtistRegister", { membershipPlanId: buttonId });
     } else if (buttonId === 2 || buttonId === 4) {
-      navigation.navigate("VenueRegister"); // Navigate to VenueRegister screen
+      navigation.navigate("VenueRegister", { membershipPlanId: buttonId });
     }
   };
 

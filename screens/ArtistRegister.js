@@ -11,7 +11,9 @@ import {
 import { Picker } from "@react-native-picker/picker";
 import CountyData from "../components/CountyData";
 
-const ArtistRegister = ({ navigation }) => {
+const ArtistRegister = ({ navigation, route }) => {
+  const membershipPlanId = route.params?.membershipPlanId;
+
   const goToUserCreated = () => {
     navigation.navigate("UserCreated");
   };
@@ -61,6 +63,7 @@ const ArtistRegister = ({ navigation }) => {
     formData.append("facebook", facebook);
     formData.append("twitter", twitter);
     formData.append("youtube", youtube);
+    formData.append("artist_membership_type", membershipPlanId);
 
     // Send the FormData object in the request
     fetch("http://localhost:8000/artists/", {

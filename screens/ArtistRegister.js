@@ -9,7 +9,6 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
-import Constants from "expo-constants";
 import CountyData from "../components/CountyData";
 
 const ArtistRegister = ({ navigation }) => {
@@ -57,22 +56,23 @@ const ArtistRegister = ({ navigation }) => {
     formData.append("genre", genre);
     formData.append("country", country);
     formData.append("county", county);
-    formData.append("type_of_Artist", typeOfArtist);
+    formData.append("type_of_artist", typeOfArtist);
     formData.append("user_type", userType);
     formData.append("facebook", facebook);
     formData.append("twitter", twitter);
     formData.append("youtube", youtube);
 
     // Send the FormData object in the request
-    fetch("http://localhost:8000/venues/", {
+    fetch("http://localhost:8000/artists/", {
       method: "POST",
       body: formData,
     })
       .then((response) => {
         if (response.ok) {
-          // Handle success
           console.log("User registered successfully");
           goToUserCreated();
+        } else {
+          console.error("Error registering user:", response.status);
         }
       })
       .catch((error) => {

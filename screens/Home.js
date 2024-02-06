@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   View,
   StyleSheet,
@@ -8,11 +8,17 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { globalStyles } from "../styles/global";
+import LoginContext from "../contexts/LoginContext";
 
 const HomeScreen = ({ navigation }) => {
+  const { userId, setUserId, artistOrVenue, setArtistOrVenue } =
+    useContext(LoginContext);
+
   const goToLogin = () => {
     navigation.navigate("Login");
   };
+
+  console.log("Home screen", userId, artistOrVenue);
 
   return (
     <View style={globalStyles.container}>

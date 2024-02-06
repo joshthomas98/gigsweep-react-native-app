@@ -3,7 +3,7 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import WelcomeScreen from "../../screens/Welcome";
 import LoginScreen from "../../screens/Login";
-import MainStack from "../bottom tab/MainStack";
+import MainNav from "../bottom tab/MainNav";
 import { TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
@@ -41,11 +41,6 @@ const AuthStack = () => {
             </TouchableOpacity>
           ),
         }}
-      />
-      <Stack.Screen
-        name="Main"
-        component={MainStack}
-        options={{ title: "Main" }}
       />
     </Stack.Navigator>
   );

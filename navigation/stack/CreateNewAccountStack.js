@@ -1,4 +1,3 @@
-// CreateNewAccountStack.js
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { TouchableOpacity, Text } from "react-native";
@@ -27,14 +26,7 @@ const CreateNewAccountStack = () => {
         component={WelcomeScreen}
         options={{
           title: "Welcome",
-          headerLeft: () => (
-            <TouchableOpacity
-              onPress={goToWelcomeScreen}
-              style={{ marginLeft: 10 }}
-            >
-              <Ionicons name="arrow-back" size={24} color="black" />
-            </TouchableOpacity>
-          ),
+          headerLeft: () => null, // Hide back button on Welcome screen
         }}
       />
       <Stack.Screen
@@ -42,59 +34,42 @@ const CreateNewAccountStack = () => {
         component={MembershipPlans}
         options={{
           title: "Membership Plans",
-          headerLeft: () => (
-            <TouchableOpacity
-              onPress={goToWelcomeScreen}
-              style={{ marginLeft: 10 }}
-            >
-              <Ionicons name="arrow-back" size={24} color="black" />
-            </TouchableOpacity>
-          ),
+          headerLeft: () => null, // Hide back button on MembershipPlans screen
         }}
       />
       <Stack.Screen
         name="ArtistRegister"
         component={ArtistRegister}
-        options={({ navigation }) => ({
+        options={{
           title: "Artist Register",
-          headerLeft: () => (
-            <TouchableOpacity
-              onPress={() => navigation.goBack()}
-              style={{ marginLeft: 10 }}
-            >
-              <Ionicons name="arrow-back" size={24} color="black" />
-            </TouchableOpacity>
-          ),
-        })}
+          headerLeft: () => null, // Hide back button on ArtistRegister screen
+        }}
       />
       <Stack.Screen
         name="VenueRegister"
         component={VenueRegister}
-        options={({ navigation }) => ({
+        options={{
           title: "Venue Register",
-          headerLeft: () => (
-            <TouchableOpacity
-              onPress={() => navigation.goBack()}
-              style={{ marginLeft: 10 }}
-            >
-              <Ionicons name="arrow-back" size={24} color="black" />
-            </TouchableOpacity>
-          ),
-        })}
+          headerLeft: () => null, // Hide back button on VenueRegister screen
+        }}
       />
       <Stack.Screen
         name="UserCreated"
         component={UserCreated}
-        options={({ navigation }) => ({
+        options={{
           title: "User Created",
-          headerLeft: () => (
-            <TouchableOpacity
-              onPress={() => navigation.goBack()}
-              style={{ marginLeft: 10 }}
-            >
-              <Ionicons name="arrow-back" size={24} color="black" />
-            </TouchableOpacity>
-          ),
+          headerLeft: () => null, // Hide back button on UserCreated screen
+          gestureEnabled: false, // Disable swipe back gesture
+        }}
+        listeners={({ navigation }) => ({
+          // Reset the stack when navigating to UserCreated screen
+          beforeRemove: (e) => {
+            e.preventDefault();
+            navigation.reset({
+              index: 0,
+              routes: [{ name: "UserCreated" }],
+            });
+          },
         })}
       />
     </Stack.Navigator>

@@ -4,6 +4,7 @@ import { Ionicons } from "@expo/vector-icons";
 import IncorrectLoginModal from "../components/IncorrectLoginModal";
 import { useNavigation } from "@react-navigation/native";
 import LoginContext from "../contexts/LoginContext";
+import HomeScreen from "./Home";
 
 const Login = () => {
   const { userId, setUserId, artistOrVenue, setArtistOrVenue } =
@@ -44,12 +45,12 @@ const Login = () => {
         setUserId(data.id);
         setArtistOrVenue(artistOrVenue);
 
-        if (data.id != null) {
-          if (artistOrVenue === "A") {
-            navigation.navigate("Main", { screen: "Home" }); // Navigate to Home screen in MainStack
-          } else if (artistOrVenue === "V") {
-            navigation.navigate("Main", { screen: "Home" });
-          }
+        if (
+          data.id != null &&
+          (artistOrVenue === "A" || artistOrVenue === "V")
+        ) {
+          // Navigate to MainNav directly
+          navigation.navigate("MainNav");
         } else {
           handleShowModal();
         }

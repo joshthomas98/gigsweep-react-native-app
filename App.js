@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { StatusBar } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import AuthStack from "./navigation/stack/AuthStack";
-import MainStack from "./navigation/bottom tab/MainStack";
+import MainNav from "./navigation/bottom tab/MainNav";
 import LoginContext, { LoginProvider } from "./contexts/LoginContext";
 import { createStackNavigator } from "@react-navigation/stack";
 import CreateNewAccountStack from "./navigation/stack/CreateNewAccountStack";
@@ -20,8 +20,8 @@ const App = () => {
 
       <NavigationContainer>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
-          {userId ? (
-            <Stack.Screen name="Main" component={MainStack} />
+          {(userId && artistOrVenue === "A") || artistOrVenue === "V" ? (
+            <Stack.Screen name="Main" component={MainNav} />
           ) : (
             <>
               <Stack.Screen name="Welcome" component={AuthStack} />
@@ -29,6 +29,7 @@ const App = () => {
                 name="CreateNewAccount"
                 component={CreateNewAccountStack}
               />
+              <Stack.Screen name="MainNav" component={MainNav} />
             </>
           )}
         </Stack.Navigator>

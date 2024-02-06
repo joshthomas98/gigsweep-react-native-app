@@ -102,7 +102,7 @@ const Login = () => {
                   styles.radioButton,
                   artistOrVenue === "A" && styles.selected,
                 ]}
-                onPress={() => handleUserTypeChange("A")}
+                onPress={() => setArtistOrVenue("A")}
               >
                 <Text>Artist</Text>
               </TouchableOpacity>
@@ -111,7 +111,7 @@ const Login = () => {
                   styles.radioButton,
                   artistOrVenue === "V" && styles.selected,
                 ]}
-                onPress={() => handleUserTypeChange("V")}
+                onPress={() => setArtistOrVenue("V")}
               >
                 <Text> Venue</Text>
               </TouchableOpacity>
@@ -177,10 +177,14 @@ const styles = {
     flexDirection: "row",
     alignItems: "center",
     marginRight: 10,
+    borderWidth: 1,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    borderRadius: 5,
   },
   selected: {
     backgroundColor: "lightblue",
-    borderRadius: 5,
+    borderColor: "blue",
   },
   button: {
     backgroundColor: "blue",

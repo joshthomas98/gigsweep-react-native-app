@@ -18,8 +18,6 @@ const HomeScreen = ({ navigation }) => {
     navigation.navigate("Login");
   };
 
-  console.log("Home screen", userId, artistOrVenue);
-
   return (
     <View style={globalStyles.container}>
       <View style={styles.logoContainer}>
@@ -29,9 +27,11 @@ const HomeScreen = ({ navigation }) => {
           resizeMode="contain"
         />
 
-        <TouchableOpacity>
-          <Button title="Login" onPress={goToLogin} />
-        </TouchableOpacity>
+        <View style={globalStyles.container}>
+          <Text style={globalStyles.textWhite}>
+            ytubhkjwhnugdghwiujhdkwjndwkhdnwk
+          </Text>
+        </View>
       </View>
     </View>
   );

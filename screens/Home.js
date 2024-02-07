@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import {
   View,
   StyleSheet,
@@ -7,10 +7,13 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
+  TextInput,
 } from "react-native";
 import { globalStyles } from "../styles/global";
 import LoginContext from "../contexts/LoginContext";
 import { FontAwesome, FontAwesome5 } from "@expo/vector-icons";
+import FeaturedArtists from "../components/FeaturedArtists";
+import Testimonials from "../components/Testimonials";
 
 const HomeScreen = ({ navigation }) => {
   const { userId, setUserId, artistOrVenue, setArtistOrVenue } =
@@ -19,6 +22,8 @@ const HomeScreen = ({ navigation }) => {
   const goToLogin = () => {
     navigation.navigate("Login");
   };
+
+  const [email, setEmail] = useState("");
 
   const handlePickUpGigClick = () => {
     navigate("/pickupgig");
@@ -44,6 +49,30 @@ const HomeScreen = ({ navigation }) => {
 
   const handleVenueProfileInfoBoxClick = () => {
     navigate(`/venueuserprofile/${userId}`);
+  };
+
+  const handleNewsletterSignUp = (event) => {
+    event.preventDefault();
+    const data = {
+      email: email,
+    };
+
+    fetch("http://localhost:8000/newslettersignups/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => {
+        if (response.ok) {
+          // navigate("/newsletterthankyou"); // PUT THIS BACK IN LATER
+          console.log("Successfully singed up for newsletter");
+        }
+      })
+      .catch((error) => {
+        console.error("Error signing up for newsletter:", error);
+      });
   };
 
   return (
@@ -191,6 +220,44 @@ const HomeScreen = ({ navigation }) => {
             </View>
           </View>
         )}
+
+        {/* Featured artists section */}
+        <View>
+          <FeaturedArtists />
+        </View>
+
+        {/* Testimonials section */}
+        <View>
+          <Testimonials />
+        </View>
+
+        {/* Newsletter section */}
+        <View style={{ paddingTop: 12, alignItems: "center" }}>
+          <Text
+            style={[globalStyles.textWhite, styles.newsletterSectionHeading]}
+          >
+            Want to stay up to date with everything happening at GigSweep?
+          </Text>
+          <Text
+            style={[globalStyles.textWhite, styles.newsletterSectionSubheading]}
+          >
+            Sign up for our monthly newsletter here!
+          </Text>
+          <View style={styles.formContainer}>
+            <TextInput
+              placeholder="Enter your email here"
+              style={styles.newsletterSectionTextInput}
+              value={email}
+              onChangeText={setEmail}
+            />
+            <TouchableOpacity
+              style={styles.newsletterSectionButton}
+              onPress={handleNewsletterSignUp}
+            >
+              <Text style={styles.newsletterSectionButtonText}>Sign Up</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
       </ScrollView>
     </View>
   );
@@ -237,9 +304,51 @@ const styles = StyleSheet.create({
     fontSize: 14,
     marginBottom: 10,
   },
-  buttonContainer: {
-    marginTop: 10, // Adjust as needed
-    alignSelf: "center", // Center the button horizontally
+  text: {
+    color: "#fff",
+    textAlign: "center",
+  },
+  heading: {
+    fontSize: 20,
+    marginBottom: 12,
+  },
+  subheading: {
+    fontSize: 16,
+    marginBottom: 24,
+  },
+  formContainer: {
+    alignItems: "center",
+  },
+  newsletterSectionTextInput: {
+    backgroundColor: "#fff",
+    width: 300,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: 8,
+    marginBottom: 12,
+  },
+  newsletterSectionButton: {
+    backgroundColor: "#007bff",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 8,
+    marginTop: 10,
+    marginBottom: 25,
+  },
+  newsletterSectionButtonText: {
+    color: "#fff",
+    fontWeight: "bold",
+    fontSize: 16,
+  },
+  newsletterSectionHeading: {
+    fontSize: 18,
+    marginBottom: 10,
+    textAlign: "center",
+  },
+  newsletterSectionSubheading: {
+    fontSize: 16,
+    marginBottom: 20,
+    textAlign: "center",
   },
 });
 

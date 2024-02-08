@@ -7,6 +7,7 @@ import MainNav from "./navigation/bottom tab/MainNav";
 import LoginContext, { LoginProvider } from "./contexts/LoginContext";
 import { createStackNavigator } from "@react-navigation/stack";
 import CreateNewAccountStack from "./navigation/stack/CreateNewAccountStack";
+import NewsletterThankYou from "./screens/NewsletterThankyou";
 
 const Stack = createStackNavigator();
 
@@ -30,6 +31,10 @@ const App = () => {
                 component={CreateNewAccountStack}
               />
               <Stack.Screen name="MainNav" component={MainNav} />
+              <Stack.Screen
+                name="NewsletterThankYou"
+                component={NewsletterThankYou}
+              />
             </>
           )}
         </Stack.Navigator>

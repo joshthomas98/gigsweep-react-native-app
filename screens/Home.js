@@ -19,10 +19,6 @@ const HomeScreen = ({ navigation }) => {
   const { userId, setUserId, artistOrVenue, setArtistOrVenue } =
     useContext(LoginContext);
 
-  const goToLogin = () => {
-    navigation.navigate("Login");
-  };
-
   const [email, setEmail] = useState("");
 
   const handlePickUpGigClick = () => {
@@ -66,7 +62,7 @@ const HomeScreen = ({ navigation }) => {
     })
       .then((response) => {
         if (response.ok) {
-          // navigate("/newsletterthankyou"); // PUT THIS BACK IN LATER
+          navigation.navigate("NewsletterThankYou");
           console.log("Successfully singed up for newsletter");
         }
       })

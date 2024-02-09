@@ -1,15 +1,21 @@
-import React from "react";
+import React, { useContext } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Ionicons } from "@expo/vector-icons"; // Assuming you're using Ionicons for icons
+import { Ionicons } from "@expo/vector-icons";
+import LoginContext from "../../contexts/LoginContext";
 import HomeScreen from "../../screens/Home";
 import MyGigsScreen from "../../screens/MyGigs";
 import SearchScreen from "../../screens/Search";
 import ProfileScreen from "../../screens/Profile";
 import SettingsScreen from "../../screens/Settings";
+import ArtistUserProfile from "../../screens/ArtistUserProfile";
+import VenueUserProfile from "../../screens/VenueUserProfile"; // Import the VenueUserProfile component
 
 const Tab = createBottomTabNavigator();
 
 const MainNav = () => {
+  const { userId, setUserId, artistOrVenue, setArtistOrVenue } =
+    useContext(LoginContext);
+
   return (
     <Tab.Navigator>
       <Tab.Screen
@@ -42,16 +48,30 @@ const MainNav = () => {
           ),
         }}
       />
-      <Tab.Screen
-        name="Profile"
-        component={ProfileScreen}
-        options={{
-          title: "Profile",
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="person" size={size} color={color} />
-          ),
-        }}
-      />
+      {artistOrVenue === "A" && (
+        <Tab.Screen
+          name="ArtistUserProfile"
+          component={ArtistUserProfile}
+          options={{
+            title: "Artist Profile",
+            tabBarIcon: ({ color, size }) => (
+              <Ionicons name="person" size={size} color={color} />
+            ),
+          }}
+        />
+      )}
+      {artistOrVenue === "V" && (
+        <Tab.Screen
+          name="VenueUserProfile"
+          component={VenueUserProfile}
+          options={{
+            title: "Venue Profile",
+            tabBarIcon: ({ color, size }) => (
+              <Ionicons name="person" size={size} color={color} />
+            ),
+          }}
+        />
+      )}
       <Tab.Screen
         name="Settings"
         component={SettingsScreen}

@@ -123,12 +123,14 @@ const ArtistUserProfile = () => {
           />
         )}
 
-        <Button
-          title="Leave feedback"
-          onPress={() =>
-            navigation.navigate("VenueWriteReview", { artistId: artist.id })
-          }
-        />
+        {artistOrVenue === "V" && (
+          <Button
+            title="Leave feedback"
+            onPress={() =>
+              navigation.navigate("VenueWriteReview", { artistId: artist.id })
+            }
+          />
+        )}
 
         {userId === profileId && (
           <Button
@@ -159,9 +161,7 @@ const ArtistUserProfile = () => {
           </Text>
           <CalendarPicker
             onDateChange={handleDateSelect}
-            customDayHeaderStyles={{
-              textStyle: { color: "white" },
-            }}
+            customDayHeaderStyles={() => ({ textStyle: { color: "white" } })}
             customDatesStyles={[
               {
                 date: new Date(),
@@ -169,16 +169,18 @@ const ArtistUserProfile = () => {
                 textStyle: { color: "white" },
               },
             ]}
-            textStyle={{ color: "white" }} // Set text color of dates
+            textStyle={{ color: "white" }}
           />
 
           {artistOrVenue === "A" && userId === profileId && (
-            <Button
-              title="Edit my availability"
-              onPress={() =>
-                navigation.navigate("ArtistEditAvailability", { profileId })
-              }
-            />
+            <View style={{ marginTop: 10 }}>
+              <Button
+                title="Edit my availability"
+                onPress={() =>
+                  navigation.navigate("ArtistEditAvailability", { profileId })
+                }
+              />
+            </View>
           )}
         </View>
 

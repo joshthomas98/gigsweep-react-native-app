@@ -8,9 +8,11 @@ import {
   ScrollView,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { format } from "date-fns";
 import CalendarPicker from "react-native-calendar-picker";
 import LoginContext from "../contexts/LoginContext";
 import { globalStyles } from "../styles/global";
+import UnavailabilityModal from "../components/UnavailabilityModal";
 
 const ArtistUserProfile = () => {
   const navigation = useNavigation();
@@ -76,6 +78,7 @@ const ArtistUserProfile = () => {
       setShowModal(true);
     } else {
       setSelectedUnavailability(null);
+      setShowModal(false); // Close modal if the selected date is available
     }
 
     setSelectedDate(date);
@@ -84,6 +87,19 @@ const ArtistUserProfile = () => {
   const formatWithTimezone = (date) => {
     const tz = "Europe/London";
     return format(date, "yyyy-MM-dd", { timeZone: tz });
+  };
+
+  const renderUnavailabilities = () => {
+    return unavailabilities.map((unavailability) => {
+      return {
+        date: new Date(unavailability.date),
+        style: { backgroundColor: "red" },
+        textStyle: { color: "white" },
+        artist: unavailability.artist,
+        status: unavailability.status,
+        reason: unavailability.reason,
+      };
+    });
   };
 
   return (
@@ -168,6 +184,7 @@ const ArtistUserProfile = () => {
                 style: { backgroundColor: "#00adf5" },
                 textStyle: { color: "white" },
               },
+              ...renderUnavailabilities(), // Mapping through unavailabilities
             ]}
             textStyle={{ color: "white" }}
           />
@@ -204,6 +221,12 @@ const ArtistUserProfile = () => {
           </Text>
           <View style={styles.photos}>{/* Render recent photos */}</View>
         </View>
+
+        <UnavailabilityModal
+          unavailability={selectedUnavailability}
+          showModal={showModal}
+          setShowModal={setShowModal}
+        />
       </View>
     </ScrollView>
   );

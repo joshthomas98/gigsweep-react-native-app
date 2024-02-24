@@ -58,13 +58,13 @@ const CreateNewAccountStack = () => {
   );
 };
 
-const CustomLeftArrow = ({ navigation }) => (
-  <TouchableOpacity
-    onPress={() => navigation.goBack()}
-    style={{ marginLeft: 10 }}
-  >
-    <Ionicons name="arrow-back-outline" size={24} color="black" />
-  </TouchableOpacity>
-);
+// const CustomLeftArrow = ({ navigation }) => (
+//   <TouchableOpacity
+//     onPress={() => navigation.goBack()}
+//     style={{ marginLeft: 10 }}
+//   >
+//     <Ionicons name="arrow-back-outline" size={24} color="black" />
+//   </TouchableOpacity>
+// );
 
 export default CreateNewAccountStack;

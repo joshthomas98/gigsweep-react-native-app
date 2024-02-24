@@ -53,7 +53,7 @@ const MainNav = () => {
           name="ArtistUserProfile"
           component={ArtistUserProfile}
           options={{
-            title: "Artist Profile",
+            title: "Profile",
             tabBarIcon: ({ color, size }) => (
               <Ionicons name="person" size={size} color={color} />
             ),
@@ -65,7 +65,7 @@ const MainNav = () => {
           name="VenueUserProfile"
           component={VenueUserProfile}
           options={{
-            title: "Venue Profile",
+            title: "Profile",
             tabBarIcon: ({ color, size }) => (
               <Ionicons name="person" size={size} color={color} />
             ),

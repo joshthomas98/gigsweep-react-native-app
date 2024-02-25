@@ -113,7 +113,7 @@ const HomeScreen = ({ navigation }) => {
               );
             case "search":
               return (
-                <View style={{ marginTop: 10, paddingHorizontal: 10 }}>
+                <View style={{ marginTop: 10, marginHorizontal: 25 }}>
                   <SearchBar />
                 </View>
               );

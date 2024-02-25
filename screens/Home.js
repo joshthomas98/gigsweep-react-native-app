@@ -6,7 +6,7 @@ import {
   Button,
   Image,
   TouchableOpacity,
-  ScrollView,
+  FlatList,
   TextInput,
 } from "react-native";
 import { globalStyles } from "../styles/global";
@@ -14,6 +14,7 @@ import LoginContext from "../contexts/LoginContext";
 import { FontAwesome, FontAwesome5 } from "@expo/vector-icons";
 import FeaturedArtists from "../components/FeaturedArtists";
 import Testimonials from "../components/Testimonials";
+import SearchBar from "../components/SearchBar";
 
 const HomeScreen = ({ navigation }) => {
   const { userId, setUserId, artistOrVenue, setArtistOrVenue } =
@@ -73,188 +74,223 @@ const HomeScreen = ({ navigation }) => {
 
   return (
     <View style={globalStyles.container}>
-      <ScrollView style={{ flex: 0 }}>
-        <View style={styles.logoContainer}>
-          <Image
-            source={require("../assets/gigsweep_logo.png")}
-            style={styles.logo}
-            resizeMode="contain"
-          />
-        </View>
+      <FlatList
+        data={[
+          "logo",
+          "welcome",
+          "search",
+          "info_boxes",
+          "featured_artists",
+          "testimonials",
+          "newsletter",
+        ]}
+        keyExtractor={(item) => item}
+        renderItem={({ item }) => {
+          switch (item) {
+            case "logo":
+              return (
+                <View style={styles.logoContainer}>
+                  <Image
+                    source={require("../assets/gigsweep_logo.png")}
+                    style={styles.logo}
+                    resizeMode="contain"
+                  />
+                </View>
+              );
+            case "welcome":
+              return (
+                <View style={globalStyles.container}>
+                  <Text
+                    style={[
+                      globalStyles.textWhite,
+                      styles.homescreenHeaderText,
+                      { marginBottom: 15 },
+                    ]}
+                  >
+                    Welcome to GigSweep!
+                  </Text>
+                </View>
+              );
+            case "search":
+              return (
+                <View style={{ marginTop: 10, paddingHorizontal: 10 }}>
+                  <SearchBar />
+                </View>
+              );
+            case "info_boxes":
+              return (
+                <View>
+                  {userId && artistOrVenue === "A" && (
+                    <View style={{ padding: 20 }}>
+                      <View style={styles.cardContainer}>
+                        <TouchableOpacity
+                          style={styles.card}
+                          onPress={handlePickUpGigClick}
+                        >
+                          <FontAwesome name="search" style={styles.icon} />
+                          <Text style={styles.homepageInfoCardTitle}>
+                            Fill Your Schedule
+                          </Text>
+                          <Text style={styles.homepageInfoCardDescription}>
+                            Browse available slots at great venues and connect
+                            with fresh fans.
+                          </Text>
+                          <Button
+                            title="Search"
+                            onPress={handlePickUpGigClick}
+                          />
+                        </TouchableOpacity>
 
-        <View style={globalStyles.container}>
-          <Text
-            style={[
-              globalStyles.textWhite,
-              styles.homescreenHeaderText,
-              { marginBottom: 15 },
-            ]}
-          >
-            Welcome to GigSweep!
-          </Text>
+                        <TouchableOpacity
+                          style={styles.card}
+                          onPress={handleAdvertiseSubmit}
+                        >
+                          <FontAwesome5 name="ad" style={styles.icon} />
+                          <Text style={styles.homepageInfoCardTitle}>
+                            Advertise Gigs
+                          </Text>
+                          <Text style={styles.homepageInfoCardDescription}>
+                            Advertise gigs you can't play anymore and let fellow
+                            artists pick them up.
+                          </Text>
+                          <Button
+                            title="Advertise"
+                            onPress={handleAdvertiseSubmit}
+                          />
+                        </TouchableOpacity>
 
-          <Text
-            style={[
-              globalStyles.textWhite,
-              { marginBottom: 10, marginHorizontal: 15, textAlign: "center" },
-            ]}
-          >
-            GigSweep connects artists and venues to ensure no gig goes to waste.
-            Showcase your talent and find gigs easily. GigSweep is not just for
-            musicians. It's also a platform for venues to find talent and for
-            fans to stay updated on gigs.
-          </Text>
-        </View>
+                        <TouchableOpacity
+                          style={styles.card}
+                          onPress={handleArtistProfileInfoBoxClick}
+                        >
+                          <FontAwesome name="play" style={styles.icon} />
+                          <Text style={styles.homepageInfoCardTitle}>
+                            Be Seen, Be Heard
+                          </Text>
+                          <Text style={styles.homepageInfoCardDescription}>
+                            Enhance your online presence and showcase your
+                            talent seamlessly.
+                          </Text>
+                          <Button
+                            title="Profile"
+                            onPress={handleArtistProfileInfoBoxClick}
+                          />
+                        </TouchableOpacity>
+                      </View>
+                    </View>
+                  )}
 
-        {/* Info boxes section */}
-        {userId && artistOrVenue === "A" && (
-          <View style={{ padding: 20 }}>
-            <View style={styles.cardContainer}>
-              <TouchableOpacity
-                style={styles.card}
-                onPress={handlePickUpGigClick}
-              >
-                <FontAwesome name="search" style={styles.icon} />
-                <Text style={styles.homepageInfoCardTitle}>
-                  Fill Your Schedule
-                </Text>
-                <Text style={styles.homepageInfoCardDescription}>
-                  Browse available slots at great venues and connect with fresh
-                  fans.
-                </Text>
-                <Button title="Search" onPress={handlePickUpGigClick} />
-              </TouchableOpacity>
+                  {userId && artistOrVenue === "V" && (
+                    <View style={{ padding: 20 }}>
+                      <View style={styles.cardContainer}>
+                        <TouchableOpacity
+                          style={styles.card}
+                          onPress={handleVenueFindArtistsClick}
+                        >
+                          <FontAwesome name="search" style={styles.icon} />
+                          <Text style={styles.homepageInfoCardTitle}>
+                            Book Your Acts
+                          </Text>
+                          <Text style={styles.homepageInfoCardDescription}>
+                            Discover a varied artist lineup for your venue and
+                            book effortlessly.
+                          </Text>
+                          <Button
+                            title="Book Artists"
+                            onPress={handleVenueFindArtistsClick}
+                          />
+                        </TouchableOpacity>
 
-              <TouchableOpacity
-                style={styles.card}
-                onPress={handleAdvertiseSubmit}
-              >
-                <FontAwesome5 name="ad" style={styles.icon} />
-                <Text style={styles.homepageInfoCardTitle}>Advertise Gigs</Text>
-                <Text style={styles.homepageInfoCardDescription}>
-                  Advertise gigs you can't play anymore and let fellow artists
-                  pick them up.
-                </Text>
-                <Button title="Advertise" onPress={handleAdvertiseSubmit} />
-              </TouchableOpacity>
+                        <TouchableOpacity
+                          style={styles.card}
+                          onPress={handleVenueProfileInfoBoxClick}
+                        >
+                          <FontAwesome
+                            name="calendar-week"
+                            style={styles.icon}
+                          />
+                          <Text style={styles.homepageInfoCardTitle}>
+                            Effortless Management
+                          </Text>
+                          <Text style={styles.homepageInfoCardDescription}>
+                            Streamline artist bookings and manage your venue's
+                            entertainment calendar.
+                          </Text>
+                          <Button
+                            title="View Bookings"
+                            onPress={handleVenueProfileInfoBoxClick}
+                          />
+                        </TouchableOpacity>
 
-              <TouchableOpacity
-                style={styles.card}
-                onPress={handleArtistProfileInfoBoxClick}
-              >
-                <FontAwesome name="play" style={styles.icon} />
-                <Text style={styles.homepageInfoCardTitle}>
-                  Be Seen, Be Heard
-                </Text>
-                <Text style={styles.homepageInfoCardDescription}>
-                  Enhance your online presence and showcase your talent
-                  seamlessly.
-                </Text>
-                <Button
-                  title="Profile"
-                  onPress={handleArtistProfileInfoBoxClick}
-                />
-              </TouchableOpacity>
-            </View>
-          </View>
-        )}
-
-        {userId && artistOrVenue === "V" && (
-          <View style={{ padding: 20 }}>
-            <View style={styles.cardContainer}>
-              <TouchableOpacity
-                style={styles.card}
-                onPress={handleVenueFindArtistsClick}
-              >
-                <FontAwesome name="search" style={styles.icon} />
-                <Text style={styles.homepageInfoCardTitle}>Book Your Acts</Text>
-                <Text style={styles.homepageInfoCardDescription}>
-                  Discover a varied artist lineup for your venue and book
-                  effortlessly.
-                </Text>
-                <Button
-                  title="Book Artists"
-                  onPress={handleVenueFindArtistsClick}
-                />
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={styles.card}
-                onPress={handleVenueProfileInfoBoxClick}
-              >
-                <FontAwesome name="calendar-week" style={styles.icon} />
-                <Text style={styles.homepageInfoCardTitle}>
-                  Effortless Management
-                </Text>
-                <Text style={styles.homepageInfoCardDescription}>
-                  Streamline artist bookings and manage your venue's
-                  entertainment calendar.
-                </Text>
-                <Button
-                  title="View Bookings"
-                  onPress={handleVenueProfileInfoBoxClick}
-                />
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={styles.card}
-                onPress={handleVenueProfileInfoBoxClick}
-              >
-                <FontAwesome name="play" style={styles.icon} />
-                <Text style={styles.homepageInfoCardTitle}>
-                  Let The Music Play
-                </Text>
-                <Text style={styles.homepageInfoCardDescription}>
-                  Elevate your venue's presence and attract talented artists and
-                  fans.
-                </Text>
-                <Button
-                  title="Profile"
-                  onPress={handleVenueProfileInfoBoxClick}
-                />
-              </TouchableOpacity>
-            </View>
-          </View>
-        )}
-
-        {/* Featured artists section */}
-        <View>
-          <FeaturedArtists />
-        </View>
-
-        {/* Testimonials section */}
-        <View>
-          <Testimonials />
-        </View>
-
-        {/* Newsletter section */}
-        <View style={{ paddingTop: 12, alignItems: "center" }}>
-          <Text
-            style={[globalStyles.textWhite, styles.newsletterSectionHeading]}
-          >
-            Want to stay up to date with everything happening at GigSweep?
-          </Text>
-          <Text
-            style={[globalStyles.textWhite, styles.newsletterSectionSubheading]}
-          >
-            Sign up for our monthly newsletter here!
-          </Text>
-          <View style={styles.formContainer}>
-            <TextInput
-              placeholder="Enter your email here"
-              style={styles.newsletterSectionTextInput}
-              value={email}
-              onChangeText={setEmail}
-            />
-            <TouchableOpacity
-              style={styles.newsletterSectionButton}
-              onPress={handleNewsletterSignUp}
-            >
-              <Text style={styles.newsletterSectionButtonText}>Sign Up</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </ScrollView>
+                        <TouchableOpacity
+                          style={styles.card}
+                          onPress={handleVenueProfileInfoBoxClick}
+                        >
+                          <FontAwesome name="play" style={styles.icon} />
+                          <Text style={styles.homepageInfoCardTitle}>
+                            Let The Music Play
+                          </Text>
+                          <Text style={styles.homepageInfoCardDescription}>
+                            Elevate your venue's presence and attract talented
+                            artists and fans.
+                          </Text>
+                          <Button
+                            title="Profile"
+                            onPress={handleVenueProfileInfoBoxClick}
+                          />
+                        </TouchableOpacity>
+                      </View>
+                    </View>
+                  )}
+                </View>
+              );
+            case "featured_artists":
+              return <FeaturedArtists />;
+            case "testimonials":
+              return <Testimonials />;
+            case "newsletter":
+              return (
+                <View style={{ paddingTop: 12, alignItems: "center" }}>
+                  <Text
+                    style={[
+                      globalStyles.textWhite,
+                      styles.newsletterSectionHeading,
+                    ]}
+                  >
+                    Want to stay up to date with everything happening at
+                    GigSweep?
+                  </Text>
+                  <Text
+                    style={[
+                      globalStyles.textWhite,
+                      styles.newsletterSectionSubheading,
+                    ]}
+                  >
+                    Sign up for our monthly newsletter here!
+                  </Text>
+                  <View style={styles.formContainer}>
+                    <TextInput
+                      placeholder="Enter your email here"
+                      style={styles.newsletterSectionTextInput}
+                      value={email}
+                      onChangeText={setEmail}
+                    />
+                    <TouchableOpacity
+                      style={styles.newsletterSectionButton}
+                      onPress={handleNewsletterSignUp}
+                    >
+                      <Text style={styles.newsletterSectionButtonText}>
+                        Sign Up
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              );
+            default:
+              return null;
+          }
+        }}
+      />
     </View>
   );
 };

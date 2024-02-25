@@ -4,11 +4,10 @@ import { Ionicons } from "@expo/vector-icons";
 import LoginContext from "../../contexts/LoginContext";
 import HomeScreen from "../../screens/Home";
 import MyGigsScreen from "../../screens/MyGigs";
-import SearchScreen from "../../screens/Search";
-import ProfileScreen from "../../screens/Profile";
-import SettingsScreen from "../../screens/Settings";
+import NotificationsScreen from "../../screens/Notifications";
 import ArtistUserProfile from "../../screens/ArtistUserProfile";
-import VenueUserProfile from "../../screens/VenueUserProfile"; // Import the VenueUserProfile component
+import VenueUserProfile from "../../screens/VenueUserProfile";
+import SettingsScreen from "../../screens/Settings";
 
 const Tab = createBottomTabNavigator();
 
@@ -39,12 +38,12 @@ const MainNav = () => {
         }}
       />
       <Tab.Screen
-        name="Search"
-        component={SearchScreen}
+        name="Notifications"
+        component={NotificationsScreen}
         options={{
-          title: "Search",
+          title: "Notifications",
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="search" size={size} color={color} />
+            <Ionicons name="notifications" size={size} color={color} />
           ),
         }}
       />

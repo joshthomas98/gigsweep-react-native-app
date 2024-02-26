@@ -12,6 +12,9 @@ export const LoginProvider = ({ children }) => {
     setArtistOrVenue(userData.artistOrVenue);
   };
 
+  console.log("LC" + userId);
+  console.log("LC" + artistOrVenue);
+
   return (
     <LoginContext.Provider
       value={{

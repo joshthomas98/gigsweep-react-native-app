@@ -16,7 +16,7 @@ const SettingsScreen = () => {
 
   useEffect(() => {
     if (!userId || !artistOrVenue) {
-      navigation.navigate("SignIn");
+      navigation.navigate("Login");
     } else if (artistOrVenue === "V") {
       navigation.navigate("RestrictedPage");
     }

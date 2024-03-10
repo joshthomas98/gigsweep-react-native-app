@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { View, Text, Linking, StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import SuccessAnimation from "../components/SuccessAnimation";
@@ -12,10 +12,16 @@ const ProfileSuccessfullyUpdated = () => {
 
   const handleProfileLink = () => {
     const profileLink =
-      storedUserType === "A"
+      artistOrVenue === "A"
         ? `artistuserprofile/${userId}`
         : `venueuserprofile/${userId}`;
-    Linking.openURL(profileLink);
+
+    // Use React Navigation's navigate function to go to the profile screen
+    if (artistOrVenue === "A") {
+      navigation.navigate("ArtistUserProfile");
+    } else {
+      navigation.navigate("VenueUserProfile");
+    }
   };
 
   return (
@@ -39,7 +45,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#000",
-    padding: 20,
+    paddingHorizontal: 20,
+    paddingTop: 100,
   },
   text: {
     color: "#fff",
@@ -55,7 +62,7 @@ const styles = StyleSheet.create({
   },
   animationContainer: {
     position: "relative",
-    top: -110,
+    top: -200,
   },
 });
 

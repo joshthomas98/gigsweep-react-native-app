@@ -66,7 +66,7 @@ const ArtistProfileSettings = () => {
       try {
         const response = await fetch(`${SERVER_BASE_URL}artists/${userId}/`);
         const data = await response.json();
-        console.log(data);
+        // console.log(data);
         setArtist([data]);
       } catch (error) {
         console.log(error);
@@ -82,15 +82,25 @@ const ArtistProfileSettings = () => {
     if (selectedImage !== null) formData.append("image", selectedImage);
     if (editedArtistName !== "")
       formData.append("artist_name", editedArtistName);
-    if (editedEmail !== "") formData.append("email", editedEmail);
-    if (editedPassword !== "") formData.append("password", editedPassword);
-    if (editedPhoneNumber !== "")
+    if (editedEmail !== "" && editedEmail !== artist[0].email)
+      formData.append("email", editedEmail);
+    if (editedPassword !== "" && editedPassword !== artist[0].password)
+      formData.append("password", editedPassword);
+    if (
+      editedPhoneNumber !== "" &&
+      editedPhoneNumber !== artist[0].phone_number
+    )
       formData.append("phone_number", editedPhoneNumber);
-    if (editedGenre !== "") formData.append("genre", editedGenre);
-    if (editedCountry !== "") formData.append("country", editedCountry);
-    if (editedCounty !== "") formData.append("county", editedCounty);
-    if (editedSummary !== "") formData.append("summary", editedSummary);
-    if (editedBio !== "") formData.append("bio", editedBio);
+    if (editedGenre !== "" && editedGenre !== artist[0].genre)
+      formData.append("genre", editedGenre);
+    if (editedCountry !== "" && editedCountry !== artist[0].country)
+      formData.append("country", editedCountry);
+    if (editedCounty !== "" && editedCounty !== artist[0].county)
+      formData.append("county", editedCounty);
+    if (editedSummary !== "" && editedSummary !== artist[0].summary)
+      formData.append("summary", editedSummary);
+    if (editedBio !== "" && editedBio !== artist[0].bio)
+      formData.append("bio", editedBio);
 
     try {
       const response = await fetch(`${SERVER_BASE_URL}artists/${userId}/`, {
@@ -101,7 +111,8 @@ const ArtistProfileSettings = () => {
       if (response.ok) {
         navigation.navigate("ProfileSuccessfullyUpdated");
       } else {
-        console.error("Error editing profile:", response.status);
+        const errorMessage = await response.text(); // Get the error message from the response body
+        console.error("Error editing profile:", response.status, errorMessage);
       }
     } catch (error) {
       console.error("Error editing profile:", error);

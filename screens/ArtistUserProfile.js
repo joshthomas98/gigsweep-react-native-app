@@ -118,7 +118,7 @@ const ArtistUserProfile = () => {
                 {artist.artist_name}
               </Text>
               <Text style={[styles.details, { color: "white" }]}>
-                County: {artist.county}
+                Location: {artist.county}, {artist.country}
               </Text>
               <Text style={[styles.details, { color: "white" }]}>
                 Genre: {artist.genre}

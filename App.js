@@ -17,6 +17,7 @@ import TermsOfService from "./screens/TermsOfService";
 import PrivacyPolicy from "./screens/PrivacyPolicy";
 import CopyrightInformation from "./screens/CopyrightInformation";
 import ContactSupport from "./screens/ContactSupport";
+import RestrictedPage from "./screens/RestrictedPage";
 
 const Stack = createStackNavigator();
 
@@ -79,6 +80,8 @@ const App = () => {
               />
 
               <Stack.Screen name="ContactSupport" component={ContactSupport} />
+
+              <Stack.Screen name="RestrictedPage" component={RestrictedPage} />
             </>
           )}
         </Stack.Navigator>

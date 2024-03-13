@@ -205,10 +205,7 @@ const HomeScreen = ({ navigation }) => {
                           style={styles.card}
                           onPress={handleVenueProfileInfoBoxClick}
                         >
-                          <FontAwesome
-                            name="calendar-week"
-                            style={styles.icon}
-                          />
+                          <FontAwesome name="calendar" style={styles.icon} />
                           <Text style={styles.homepageInfoCardTitle}>
                             Effortless Management
                           </Text>

@@ -8,7 +8,7 @@ const HelpCentre = () => {
       <CustomHeader title="Help Center / FAQs" />
       <ScrollView contentContainerStyle={styles.contentContainer}>
         <View style={styles.content}>
-          <View style={styles.section}>
+          <View style={[styles.section, { marginTop: 20 }]}>
             <Text style={styles.sectionTitle}>Getting Started</Text>
             <Text style={styles.question}>
               1. How do I create an account on GigSweep?
@@ -103,7 +103,7 @@ const HelpCentre = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff", // Adjust background color as needed
+    backgroundColor: "#f5f5f5", // Light gray background
   },
   contentContainer: {
     flexGrow: 1,
@@ -112,25 +112,38 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    marginTop: 35,
+    marginTop: 20,
   },
   section: {
     marginBottom: 20,
+    backgroundColor: "#fff", // White background for each section
+    borderRadius: 10, // Rounded corners
+    padding: 15, // Add some padding
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   sectionTitle: {
     fontSize: 20,
     fontWeight: "bold",
     marginBottom: 10,
+    color: "#333", // Darker text color
   },
   question: {
     fontSize: 16,
     fontWeight: "bold",
     marginBottom: 5,
+    color: "#555", // Medium text color
   },
   answer: {
     fontSize: 16,
     marginBottom: 10,
-    color: "#333", // Adjust text color as needed
+    color: "#666", // Lighter text color
   },
 });
 

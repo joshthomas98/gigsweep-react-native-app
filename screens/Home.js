@@ -28,24 +28,24 @@ const HomeScreen = ({ navigation }) => {
 
   const handleAdvertiseSubmit = () => {
     if (userId && artistOrVenue === "A") {
-      navigate("/artistadvertisegig");
+      navigation.navigate("/artistadvertisegig");
     } else if (userId && artistOrVenue === "V") {
-      navigate("/venueadvertisegig");
+      navigation.navigate("/venueadvertisegig");
     } else if (!userId && !artistOrVenue) {
-      navigate("/signin");
+      navigation.navigate("/signin");
     }
   };
 
   const handleArtistProfileInfoBoxClick = () => {
-    navigate(`/artistuserprofile/${userId}`);
+    navigation.navigate("ArtistUserProfile");
   };
 
   const handleVenueFindArtistsClick = () => {
-    navigate("/venuesearchforartist");
+    navigation.navigate("/VenueSearchForArtist");
   };
 
   const handleVenueProfileInfoBoxClick = () => {
-    navigate(`/venueuserprofile/${userId}`);
+    navigation.navigate("VenueUserProfile");
   };
 
   const handleNewsletterSignUp = (event) => {
@@ -247,7 +247,13 @@ const HomeScreen = ({ navigation }) => {
               return <Testimonials />;
             case "newsletter":
               return (
-                <View style={{ paddingTop: 12, alignItems: "center" }}>
+                <View
+                  style={{
+                    paddingTop: 12,
+                    marginBottom: 10,
+                    alignItems: "center",
+                  }}
+                >
                   <Text
                     style={[
                       globalStyles.textWhite,
@@ -332,6 +338,7 @@ const styles = StyleSheet.create({
   homepageInfoCardDescription: {
     fontSize: 14,
     marginBottom: 10,
+    textAlign: "center",
   },
   text: {
     color: "#fff",

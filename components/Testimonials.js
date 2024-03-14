@@ -54,9 +54,9 @@ const Testimonials = () => {
           />
           <Text style={[styles.name, { color: "#fff" }]}>Emily</Text>
           <Text style={[styles.text, { color: "#fff" }]}>
-            "GigSweep keeps me in the loop with my favorite bands' upcoming
-            shows. It's my go-to platform for finding when and where they're
-            playing in my local area. Highly recommended!" - Emily S, Music Fan
+            "GigSweep connects me with amazing acts effortlessly. No more stress
+            over cancellations; it's my go-to for ensuring unforgettable
+            performances at my venue!" - Emily S, Venue Owner
           </Text>
         </View>
       </ScrollView>
@@ -95,11 +95,13 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 18,
     fontWeight: "bold",
+    marginTop: 5,
     marginBottom: 5,
     textAlign: "center",
   },
   text: {
     textAlign: "center",
+    marginTop: 10,
   },
 });
 

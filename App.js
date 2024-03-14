@@ -18,6 +18,7 @@ import PrivacyPolicy from "./screens/PrivacyPolicy";
 import CopyrightInformation from "./screens/CopyrightInformation";
 import ContactSupport from "./screens/ContactSupport";
 import RestrictedPage from "./screens/RestrictedPage";
+import VenueProfileSettings from "./screens/VenueProfileSettings";
 
 const Stack = createStackNavigator();
 
@@ -52,6 +53,11 @@ const App = () => {
               <Stack.Screen
                 name="ArtistProfileSettings"
                 component={ArtistProfileSettings}
+              />
+
+              <Stack.Screen
+                name="VenueProfileSettings"
+                component={VenueProfileSettings}
               />
 
               <Stack.Screen

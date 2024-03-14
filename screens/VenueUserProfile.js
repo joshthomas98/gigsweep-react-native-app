@@ -41,7 +41,10 @@ const VenueUserProfile = () => {
   }, [profileId, SERVER_BASE_URL]);
 
   return (
-    <ScrollView style={{ flex: 1 }}>
+    <ScrollView
+      style={{ flex: 1, backgroundColor: "#121212" }}
+      contentContainerStyle={{ flexGrow: 1 }}
+    >
       <View style={globalStyles.container}>
         <Text style={[styles.title, { color: "white" }]}>My Profile</Text>
 
@@ -121,10 +124,10 @@ const VenueUserProfile = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-  },
+  // container: {
+  //   flex: 1,
+  //   padding: 20,
+  // },
   title: {
     fontSize: 24,
     fontWeight: "bold",

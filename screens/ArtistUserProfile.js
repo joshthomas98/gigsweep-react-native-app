@@ -103,7 +103,10 @@ const ArtistUserProfile = () => {
   };
 
   return (
-    <ScrollView>
+    <ScrollView
+      style={{ flex: 1, backgroundColor: "#121212" }}
+      contentContainerStyle={{ flexGrow: 1 }}
+    >
       <View style={globalStyles.container}>
         <Text style={[styles.title, { color: "white" }]}>My Profile</Text>
 

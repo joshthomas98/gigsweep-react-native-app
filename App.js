@@ -19,6 +19,7 @@ import CopyrightInformation from "./screens/CopyrightInformation";
 import ContactSupport from "./screens/ContactSupport";
 import RestrictedPage from "./screens/RestrictedPage";
 import VenueProfileSettings from "./screens/VenueProfileSettings";
+import LanguagePreferencesScreen from "./screens/LanguagePreferences";
 
 const Stack = createStackNavigator();
 
@@ -88,6 +89,11 @@ const App = () => {
               <Stack.Screen name="ContactSupport" component={ContactSupport} />
 
               <Stack.Screen name="RestrictedPage" component={RestrictedPage} />
+
+              <Stack.Screen
+                name="LanguagePreferences"
+                component={LanguagePreferencesScreen}
+              />
             </>
           )}
         </Stack.Navigator>

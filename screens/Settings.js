@@ -33,6 +33,8 @@ const SettingsScreen = () => {
       navigation.navigate("CopyrightInformation");
     } else if (option === "Contact support") {
       navigation.navigate("ContactSupport");
+    } else if (option === "Language preferences") {
+      navigation.navigate("LanguagePreferences");
     } else {
       console.log("Option pressed:", option);
     }

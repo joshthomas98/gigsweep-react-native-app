@@ -158,13 +158,6 @@ const ArtistUserProfile = () => {
           />
         )}
 
-        {userId === profileId && (
-          <Button
-            title="View my listed gigs"
-            onPress={() => navigation.navigate("MyListedGigs")}
-          />
-        )}
-
         <View style={styles.aboutContainer}>
           <Text style={[styles.aboutTitle, { color: "white" }]}>About</Text>
           {artist.map((artist) => (

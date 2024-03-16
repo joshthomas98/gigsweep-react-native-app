@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { View, StyleSheet, Text, Switch, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import CustomHeader from "../components/CustomHeader";
 
 const LanguagePreferencesScreen = () => {
   const navigation = useNavigation();
@@ -17,6 +18,7 @@ const LanguagePreferencesScreen = () => {
 
   return (
     <View style={styles.container}>
+      <CustomHeader title="Language Preferences" />
       <Text style={styles.title}>Language Preferences</Text>
       <View style={styles.languageContainer}>
         <Text style={styles.language}>English</Text>

@@ -20,6 +20,7 @@ import ContactSupport from "./screens/ContactSupport";
 import RestrictedPage from "./screens/RestrictedPage";
 import VenueProfileSettings from "./screens/VenueProfileSettings";
 import LanguagePreferencesScreen from "./screens/LanguagePreferences";
+import GigAdvertised from "./screens/GigAdvertised";
 
 const Stack = createStackNavigator();
 
@@ -94,6 +95,8 @@ const App = () => {
                 name="LanguagePreferences"
                 component={LanguagePreferencesScreen}
               />
+
+              <Stack.Screen name="GigAdvertised" component={GigAdvertised} />
             </>
           )}
         </Stack.Navigator>

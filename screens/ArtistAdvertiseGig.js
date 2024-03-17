@@ -10,10 +10,25 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import LoginContext from "../contexts/LoginContext";
+import { globalStyles } from "../styles/global";
 
 const ArtistAdvertiseGig = () => {
   const { userId, artistOrVenue } = useContext(LoginContext);
   const navigation = useNavigation();
+
+  const SERVER_BASE_URL = "http://localhost:8000/";
+
+  const profileId = userId;
+
+  const [artist, setArtist] = useState("");
+
+  const [dateOfGig, setDateOfGig] = useState("");
+  const [venueName, setVenueName] = useState("");
+  const [countryOfVenue, setCountryOfVenue] = useState("");
+  const [genreOfGig, setGenreOfGig] = useState("");
+  const [typeOfGig, setTypeOfGig] = useState("");
+  const [payment, setPayment] = useState("");
+  const [description, setDescription] = useState("");
 
   useEffect(() => {
     if (!userId || !artistOrVenue) {
@@ -23,16 +38,26 @@ const ArtistAdvertiseGig = () => {
     }
   }, [userId, artistOrVenue, navigation]);
 
-  const [artistName, setArtistName] = useState("");
-  const [dateOfGig, setDateOfGig] = useState("");
-  const [venueName, setVenueName] = useState("");
-  const [countryOfVenue, setCountryOfVenue] = useState("");
-  const [genreOfGig, setGenreOfGig] = useState("");
-  const [typeOfGig, setTypeOfGig] = useState("");
-  const [payment, setPayment] = useState("");
+  useEffect(() => {
+    const fetchArtist = async () => {
+      try {
+        const response = await fetch(`${SERVER_BASE_URL}artists/${profileId}/`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch artist data");
+        }
+        const data = await response.json();
+        setArtist(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchArtist();
+  }, []);
 
   const handleSubmit = (event) => {
     event.preventDefault();
+
     // convert dateOfGig to a Date object
     const dateObj = new Date(dateOfGig);
 
@@ -40,18 +65,21 @@ const ArtistAdvertiseGig = () => {
     const date = dateObj.toISOString().slice(0, 10);
 
     const data = {
-      artist: fetchedArtistDetails ? fetchedArtistDetails.id : "", // Include the fetched artist name
-      date_of_gig: date,
+      artist: artist.id,
+      date_of_gig: dateOfGig,
       venue_name: venueName,
       country_of_venue: countryOfVenue,
       genre_of_gig: genreOfGig,
       type_of_gig: typeOfGig,
-      type_of_artist: fetchedArtistDetails
-        ? fetchedArtistDetails.type_of_artist
-        : "",
+      type_of_artist: artist.type_of_artist,
       payment: payment,
       user_type: artistOrVenue === "A" ? "Artist" : "",
+      description: description,
+      status: "Active",
     };
+
+    // Log each value in the data object
+    console.log("Data to be submitted:", data);
 
     fetch("http://localhost:8000/artist_listed_gigs/", {
       method: "POST",
@@ -62,7 +90,7 @@ const ArtistAdvertiseGig = () => {
     })
       .then((response) => {
         if (response.ok) {
-          navigate("/gigadvertised");
+          navigation.navigate("GigAdvertised");
         } else {
           console.error("Error advertising gig:", response.status);
         }
@@ -77,7 +105,7 @@ const ArtistAdvertiseGig = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={globalStyles.container}>
       <View style={styles.header}>
         <TouchableOpacity style={styles.backButton} onPress={goBack}>
           <Ionicons name="arrow-back-outline" size={24} color="black" />
@@ -87,11 +115,12 @@ const ArtistAdvertiseGig = () => {
 
       <View style={styles.formContainer}>
         <TextInput
-          style={styles.input}
+          style={[styles.input, { backgroundColor: "#dddddd" }]}
           placeholder="Artist Name"
-          value={artistName}
-          onChangeText={setArtistName}
+          value={artist.artist_name}
+          editable={false} // Disable editing
         />
+
         <TextInput
           style={styles.input}
           placeholder="Date of Gig"
@@ -127,6 +156,12 @@ const ArtistAdvertiseGig = () => {
           placeholder="Payment For Gig"
           value={payment}
           onChangeText={setPayment}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Reason why you're unable to perform"
+          value={description}
+          onChangeText={setDescription}
         />
         <Button title="Submit" onPress={handleSubmit} />
       </View>
@@ -171,6 +206,7 @@ const styles = StyleSheet.create({
     height: 40,
     width: "100%",
     borderColor: "gray",
+    backgroundColor: "white",
     borderWidth: 1,
     marginBottom: 10,
     paddingHorizontal: 10,

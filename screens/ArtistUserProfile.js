@@ -15,8 +15,8 @@ import { globalStyles } from "../styles/global";
 import UnavailabilityModal from "../components/UnavailabilityModal";
 
 const ArtistUserProfile = () => {
-  const navigation = useNavigation();
   const { userId, artistOrVenue } = useContext(LoginContext);
+  const navigation = useNavigation();
 
   const SERVER_BASE_URL = "http://localhost:8000/";
 

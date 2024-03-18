@@ -11,6 +11,7 @@ import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import LoginContext from "../contexts/LoginContext";
 import { globalStyles } from "../styles/global";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 const ArtistAdvertiseGig = () => {
   const { userId, artistOrVenue } = useContext(LoginContext);
@@ -21,7 +22,6 @@ const ArtistAdvertiseGig = () => {
   const profileId = userId;
 
   const [artist, setArtist] = useState("");
-
   const [dateOfGig, setDateOfGig] = useState("");
   const [venueName, setVenueName] = useState("");
   const [countryOfVenue, setCountryOfVenue] = useState("");
@@ -29,6 +29,7 @@ const ArtistAdvertiseGig = () => {
   const [typeOfGig, setTypeOfGig] = useState("");
   const [payment, setPayment] = useState("");
   const [description, setDescription] = useState("");
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
   useEffect(() => {
     if (!userId || !artistOrVenue) {
@@ -58,12 +59,6 @@ const ArtistAdvertiseGig = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    // convert dateOfGig to a Date object
-    const dateObj = new Date(dateOfGig);
-
-    // extract only the date portion
-    const date = dateObj.toISOString().slice(0, 10);
-
     const data = {
       artist: artist.id,
       date_of_gig: dateOfGig,
@@ -78,7 +73,6 @@ const ArtistAdvertiseGig = () => {
       status: "Active",
     };
 
-    // Log each value in the data object
     console.log("Data to be submitted:", data);
 
     fetch("http://localhost:8000/artist_listed_gigs/", {
@@ -104,6 +98,13 @@ const ArtistAdvertiseGig = () => {
     navigation.goBack();
   };
 
+  const handleConfirm = (selectedDate) => {
+    setDatePickerVisibility(false);
+    if (selectedDate) {
+      setDateOfGig(selectedDate.toISOString().slice(0, 10));
+    }
+  };
+
   return (
     <View style={globalStyles.container}>
       <View style={styles.header}>
@@ -114,19 +115,28 @@ const ArtistAdvertiseGig = () => {
       </View>
 
       <View style={styles.formContainer}>
+        <Text style={styles.advertiseGigInfoText}>
+          Fill in the form below to advertise a gig which you can no longer
+          play. Your gig advert will be listed and other artists will be able to
+          pick it up instead or contact you about it.
+        </Text>
+
         <TextInput
           style={[styles.input, { backgroundColor: "#dddddd" }]}
           placeholder="Artist Name"
           value={artist.artist_name}
-          editable={false} // Disable editing
+          editable={false}
         />
 
-        <TextInput
-          style={styles.input}
-          placeholder="Date of Gig"
-          value={dateOfGig}
-          onChangeText={setDateOfGig}
-        />
+        <TouchableOpacity
+          onPress={() => setDatePickerVisibility(true)}
+          style={styles.dateInput}
+        >
+          <Text style={dateOfGig ? styles.dateText : styles.placeholderText}>
+            {dateOfGig || "Select Date of Gig"}
+          </Text>
+        </TouchableOpacity>
+
         <TextInput
           style={styles.input}
           placeholder="Venue Name"
@@ -163,8 +173,17 @@ const ArtistAdvertiseGig = () => {
           value={description}
           onChangeText={setDescription}
         />
-        <Button title="Submit" onPress={handleSubmit} />
+        <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+          <Text style={styles.buttonText}>Submit</Text>
+        </TouchableOpacity>
       </View>
+
+      <DateTimePickerModal
+        isVisible={isDatePickerVisible}
+        mode="date"
+        onConfirm={handleConfirm}
+        onCancel={() => setDatePickerVisibility(false)}
+      />
     </View>
   );
 };
@@ -177,7 +196,7 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "center", // Add this line
+    justifyContent: "center",
     height: 100,
     backgroundColor: "#ffffff",
     paddingTop: 40,
@@ -202,6 +221,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: 20,
   },
+  advertiseGigInfoText: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "white",
+    marginTop: 5,
+    marginBottom: 30,
+    textAlign: "center",
+  },
   input: {
     height: 40,
     width: "100%",
@@ -210,6 +237,34 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginBottom: 10,
     paddingHorizontal: 10,
+  },
+  dateInput: {
+    height: 40,
+    width: 353,
+    borderColor: "gray",
+    backgroundColor: "white",
+    borderWidth: 1,
+    paddingTop: 10,
+    marginBottom: 10,
+    paddingHorizontal: 10,
+  },
+  dateText: {
+    color: "black",
+  },
+  placeholderText: {
+    color: "#CCCCCC",
+  },
+  button: {
+    backgroundColor: "blue",
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    borderRadius: 20,
+    marginTop: 20,
+  },
+  buttonText: {
+    color: "white",
+    fontSize: 18,
+    textAlign: "center",
   },
 });
 

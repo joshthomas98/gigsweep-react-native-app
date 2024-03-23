@@ -121,6 +121,15 @@ const Login = () => {
               <Text style={styles.buttonText}>Login</Text>
             </TouchableOpacity>
 
+            <TouchableOpacity
+              style={{ marginTop: 10 }}
+              onPress={() => {
+                navigation.navigate("ChangePassword");
+              }}
+            >
+              <Text style={{ textAlign: "center" }}>Forgot password</Text>
+            </TouchableOpacity>
+
             {showModal && (
               <IncorrectLoginModal
                 show={showModal}
@@ -130,7 +139,7 @@ const Login = () => {
           </View>
         </View>
 
-        <View style={{ alignItems: "center" }}>
+        <View style={{ alignItems: "center", marginTop: 20 }}>
           <Text>New to GigSweep?</Text>
 
           <TouchableOpacity
@@ -157,7 +166,8 @@ const styles = {
   title: {
     fontSize: 20,
     fontWeight: "bold",
-    marginBottom: 10,
+    marginBottom: 20,
+    textAlign: "center",
   },
   form: {
     marginBottom: 20,
@@ -172,6 +182,7 @@ const styles = {
   radioGroup: {
     flexDirection: "row",
     marginBottom: 10,
+    justifyContent: "center", // Center the radio buttons horizontally
   },
   radioButton: {
     flexDirection: "row",

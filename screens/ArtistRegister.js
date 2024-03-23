@@ -7,6 +7,7 @@ import {
   ScrollView,
   StyleSheet,
   TouchableOpacity,
+  SafeAreaView,
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import CountyData from "../components/CountyData";
@@ -84,186 +85,192 @@ const ArtistRegister = ({ navigation, route }) => {
   };
 
   return (
-    <View style={styles.container}>
-      <ScrollView style={{ flex: 0 }}>
-        <Text style={styles.header}>STEP 2 OF 3: Register as an artist</Text>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
+      <View style={styles.container}>
+        <ScrollView style={{ flex: 0 }}>
+          <Text style={styles.header}>STEP 2 OF 3: Register as an artist</Text>
 
-        <Text style={styles.label}>Artist Name:</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Enter your artist name here"
-          value={artistName}
-          onChangeText={(text) => setArtistName(text)}
-        />
+          <Text style={styles.label}>Artist Name:</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Enter your artist name here"
+            value={artistName}
+            onChangeText={(text) => setArtistName(text)}
+          />
 
-        <Text style={styles.label}>Email:</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Enter your email here"
-          value={email}
-          onChangeText={(text) => setEmail(text)}
-        />
+          <Text style={styles.label}>Email:</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Enter your email here"
+            value={email}
+            onChangeText={(text) => setEmail(text)}
+          />
 
-        <Text style={styles.label}>Password:</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Enter your password here"
-          value={password}
-          onChangeText={(text) => setPassword(text)}
-          secureTextEntry
-        />
+          <Text style={styles.label}>Password:</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Enter your password here"
+            value={password}
+            onChangeText={(text) => setPassword(text)}
+            secureTextEntry
+          />
 
-        <Text style={styles.label}>Phone Number:</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Enter your phone number here"
-          value={phoneNumber}
-          onChangeText={(text) => setPhoneNumber(text)}
-        />
+          <Text style={styles.label}>Phone Number:</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Enter your phone number here"
+            value={phoneNumber}
+            onChangeText={(text) => setPhoneNumber(text)}
+          />
 
-        <Text style={styles.label}>Bio:</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Create an artist bio"
-          value={bio}
-          onChangeText={(text) => setBio(text)}
-        />
+          <Text style={styles.label}>Bio:</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Create an artist bio"
+            value={bio}
+            onChangeText={(text) => setBio(text)}
+          />
 
-        <Text style={styles.label}>Summary:</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Short version of your bio"
-          value={summary}
-          onChangeText={(text) => setSummary(text)}
-        />
+          <Text style={styles.label}>Summary:</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Short version of your bio"
+            value={summary}
+            onChangeText={(text) => setSummary(text)}
+          />
 
-        <Text style={styles.label}>Genre:</Text>
-        <TouchableOpacity
-          style={styles.input}
-          onPress={() => setShowGenrePicker(true)}
-        >
-          <Text style={[styles.label, { marginTop: 9 }]}>
-            {genre || "Select a genre"}
-          </Text>
-        </TouchableOpacity>
-        {showGenrePicker && (
-          <Picker
-            style={styles.picker}
-            selectedValue={genre}
-            onValueChange={(itemValue) => {
-              setGenre(itemValue);
-              setShowGenrePicker(false);
-            }}
+          <Text style={styles.label}>Genre:</Text>
+          <TouchableOpacity
+            style={styles.input}
+            onPress={() => setShowGenrePicker(true)}
           >
-            <Picker.Item label="Select a genre" value="" />
-            <Picker.Item label="Rock" value="Rock" />
-            <Picker.Item label="Pop" value="Pop" />
-            <Picker.Item label="Jazz" value="Jazz" />
-          </Picker>
-        )}
+            <Text style={[styles.label, { marginTop: 9 }]}>
+              {genre || "Select a genre"}
+            </Text>
+          </TouchableOpacity>
+          {showGenrePicker && (
+            <Picker
+              style={styles.picker}
+              selectedValue={genre}
+              onValueChange={(itemValue) => {
+                setGenre(itemValue);
+                setShowGenrePicker(false);
+              }}
+            >
+              <Picker.Item label="Select a genre" value="" />
+              <Picker.Item label="Rock" value="Rock" />
+              <Picker.Item label="Pop" value="Pop" />
+              <Picker.Item label="Jazz" value="Jazz" />
+            </Picker>
+          )}
 
-        <Text style={styles.label}>Country:</Text>
-        <TouchableOpacity
-          style={styles.input}
-          onPress={() => setShowCountryPicker(true)}
-        >
-          <Text style={[styles.label, { marginTop: 9 }]}>
-            {country || "Select a country"}
-          </Text>
-        </TouchableOpacity>
-        {showCountryPicker && (
-          <Picker
-            style={styles.picker}
-            selectedValue={country}
-            onValueChange={(itemValue) => {
-              handleCountryChange(itemValue);
-              setShowCountryPicker(false);
-            }}
+          <Text style={styles.label}>Country:</Text>
+          <TouchableOpacity
+            style={styles.input}
+            onPress={() => setShowCountryPicker(true)}
           >
-            <Picker.Item label="Select a country" value="" />
-            <Picker.Item label="England" value="England" />
-            <Picker.Item label="Wales" value="Wales" />
-            <Picker.Item label="Scotland" value="Scotland" />
-            <Picker.Item label="Northern Ireland" value="Northern Ireland" />
-          </Picker>
-        )}
+            <Text style={[styles.label, { marginTop: 9 }]}>
+              {country || "Select a country"}
+            </Text>
+          </TouchableOpacity>
+          {showCountryPicker && (
+            <Picker
+              style={styles.picker}
+              selectedValue={country}
+              onValueChange={(itemValue) => {
+                handleCountryChange(itemValue);
+                setShowCountryPicker(false);
+              }}
+            >
+              <Picker.Item label="Select a country" value="" />
+              <Picker.Item label="England" value="England" />
+              <Picker.Item label="Wales" value="Wales" />
+              <Picker.Item label="Scotland" value="Scotland" />
+              <Picker.Item label="Northern Ireland" value="Northern Ireland" />
+            </Picker>
+          )}
 
-        <Text style={styles.label}>County:</Text>
-        <TouchableOpacity
-          style={styles.input}
-          onPress={() => setShowCountyPicker(true)}
-        >
-          <Text style={[styles.label, { marginTop: 9 }]}>
-            {county || "Select a county"}
-          </Text>
-        </TouchableOpacity>
-        {showCountyPicker && (
-          <Picker
-            style={styles.picker}
-            selectedValue={county}
-            onValueChange={(itemValue) => {
-              setCounty(itemValue);
-              setShowCountyPicker(false);
-            }}
+          <Text style={styles.label}>County:</Text>
+          <TouchableOpacity
+            style={styles.input}
+            onPress={() => setShowCountyPicker(true)}
           >
-            {/* Map over CountyData for selected country here */}
-            {CountyData[country]?.map((countyName, index) => (
-              <Picker.Item key={index} label={countyName} value={countyName} />
-            ))}
-          </Picker>
-        )}
+            <Text style={[styles.label, { marginTop: 9 }]}>
+              {county || "Select a county"}
+            </Text>
+          </TouchableOpacity>
+          {showCountyPicker && (
+            <Picker
+              style={styles.picker}
+              selectedValue={county}
+              onValueChange={(itemValue) => {
+                setCounty(itemValue);
+                setShowCountyPicker(false);
+              }}
+            >
+              {/* Map over CountyData for selected country here */}
+              {CountyData[country]?.map((countyName, index) => (
+                <Picker.Item
+                  key={index}
+                  label={countyName}
+                  value={countyName}
+                />
+              ))}
+            </Picker>
+          )}
 
-        <Text style={styles.label}>Type of Artist:</Text>
-        <TouchableOpacity
-          style={styles.input}
-          onPress={() => setShowTypeOfArtistPicker(true)}
-        >
-          <Text style={[styles.label, { marginTop: 9 }]}>
-            {typeOfArtist || "Select type of artist"}
-          </Text>
-        </TouchableOpacity>
-        {showTypeOfArtistPicker && (
-          <Picker
-            style={styles.picker}
-            selectedValue={typeOfArtist}
-            onValueChange={(itemValue) => {
-              setTypeOfArtist(itemValue);
-              setShowTypeOfArtistPicker(false);
-            }}
+          <Text style={styles.label}>Type of Artist:</Text>
+          <TouchableOpacity
+            style={styles.input}
+            onPress={() => setShowTypeOfArtistPicker(true)}
           >
-            <Picker.Item label="Select artist type:" value="" />
-            <Picker.Item label="Full band" value="Full band" />
-            <Picker.Item label="Solo artist" value="Solo artist" />
-            <Picker.Item label="Duo" value="Duo" />
-          </Picker>
-        )}
+            <Text style={[styles.label, { marginTop: 9 }]}>
+              {typeOfArtist || "Select type of artist"}
+            </Text>
+          </TouchableOpacity>
+          {showTypeOfArtistPicker && (
+            <Picker
+              style={styles.picker}
+              selectedValue={typeOfArtist}
+              onValueChange={(itemValue) => {
+                setTypeOfArtist(itemValue);
+                setShowTypeOfArtistPicker(false);
+              }}
+            >
+              <Picker.Item label="Select artist type:" value="" />
+              <Picker.Item label="Full band" value="Full band" />
+              <Picker.Item label="Solo artist" value="Solo artist" />
+              <Picker.Item label="Duo" value="Duo" />
+            </Picker>
+          )}
 
-        <Text style={styles.label}>Facebook:</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Enter your Facebook link here"
-          value={facebook}
-          onChangeText={(text) => setFacebook(text)}
-        />
+          <Text style={styles.label}>Facebook:</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Enter your Facebook link here"
+            value={facebook}
+            onChangeText={(text) => setFacebook(text)}
+          />
 
-        <Text style={styles.label}>Twitter:</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Enter your Twitter link here"
-          value={twitter}
-          onChangeText={(text) => setTwitter(text)}
-        />
+          <Text style={styles.label}>Twitter:</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Enter your Twitter link here"
+            value={twitter}
+            onChangeText={(text) => setTwitter(text)}
+          />
 
-        <Text style={styles.label}>Youtube:</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Enter your Youtube link here"
-          value={youtube}
-          onChangeText={(text) => setYoutube(text)}
-        />
-      </ScrollView>
-      <Button title="Sign up" onPress={handleSubmit} />
-    </View>
+          <Text style={styles.label}>Youtube:</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Enter your Youtube link here"
+            value={youtube}
+            onChangeText={(text) => setYoutube(text)}
+          />
+        </ScrollView>
+        <Button title="Sign up" onPress={handleSubmit} />
+      </View>
+    </SafeAreaView>
   );
 };
 
@@ -272,6 +279,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     backgroundColor: "#fff",
+    marginTop: 40,
   },
   header: {
     fontSize: 24,

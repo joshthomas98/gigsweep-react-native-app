@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { View, Text, ScrollView, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+  SafeAreaView,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
 const MembershipPlans = () => {
@@ -86,8 +92,15 @@ const MembershipPlans = () => {
   };
 
   return (
-    <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-      <View style={{ padding: 20 }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
+      <ScrollView
+        style={{ flex: 1 }}
+        contentContainerStyle={{
+          padding: 20,
+          marginTop: 40,
+          paddingBottom: 40,
+        }}
+      >
         <Text style={{ fontSize: 24, fontWeight: "bold", marginBottom: 10 }}>
           STEP 1 OF 3: Select your membership type
         </Text>
@@ -129,8 +142,8 @@ const MembershipPlans = () => {
             )}
           </View>
         ))}
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 

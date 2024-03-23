@@ -35,6 +35,8 @@ const SettingsScreen = () => {
       navigation.navigate("ContactSupport");
     } else if (option === "Language preferences") {
       navigation.navigate("LanguagePreferences");
+    } else if (option === "Change password") {
+      navigation.navigate("ChangePassword");
     } else {
       console.log("Option pressed:", option);
     }

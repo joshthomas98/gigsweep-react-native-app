@@ -8,6 +8,7 @@ import MembershipPlans from "../../screens/MembershipPlans";
 import ArtistRegister from "../../screens/ArtistRegister";
 import VenueRegister from "../../screens/VenueRegister";
 import UserCreated from "../../screens/UserCreated";
+import CustomHeader from "../../components/CustomHeader";
 
 const Stack = createStackNavigator();
 
@@ -27,7 +28,7 @@ const CreateNewAccountStack = () => {
         component={MembershipPlans}
         options={({ navigation }) => ({
           title: "Membership Plans",
-          headerLeft: () => <CustomLeftArrow navigation={navigation} />,
+          header: () => <CustomHeader title="Membership Plans" />, // Use CustomHeader
         })}
       />
       <Stack.Screen
@@ -35,7 +36,7 @@ const CreateNewAccountStack = () => {
         component={ArtistRegister}
         options={({ navigation }) => ({
           title: "Artist Register",
-          headerLeft: () => <CustomLeftArrow navigation={navigation} />,
+          header: () => <CustomHeader title="Artist Register" />, // Use CustomHeader
         })}
       />
       <Stack.Screen
@@ -43,7 +44,7 @@ const CreateNewAccountStack = () => {
         component={VenueRegister}
         options={({ navigation }) => ({
           title: "Venue Register",
-          headerLeft: () => <CustomLeftArrow navigation={navigation} />,
+          header: () => <CustomHeader title="Venue Register" />, // Use CustomHeader
         })}
       />
       <Stack.Screen
@@ -57,14 +58,5 @@ const CreateNewAccountStack = () => {
     </Stack.Navigator>
   );
 };
-
-// const CustomLeftArrow = ({ navigation }) => (
-//   <TouchableOpacity
-//     onPress={() => navigation.goBack()}
-//     style={{ marginLeft: 10 }}
-//   >
-//     <Ionicons name="arrow-back-outline" size={24} color="black" />
-//   </TouchableOpacity>
-// );
 
 export default CreateNewAccountStack;

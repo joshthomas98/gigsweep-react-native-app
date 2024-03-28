@@ -22,6 +22,9 @@ import VenueProfileSettings from "./screens/VenueProfileSettings";
 import LanguagePreferencesScreen from "./screens/LanguagePreferences";
 import GigAdvertised from "./screens/GigAdvertised";
 import ChangePassword from "./screens/ChangePassword";
+import EnterEmailToResetPassword from "./screens/EnterEmailToResetPassword";
+import DataSharingPreferences from "./screens/ProfileVisibilitySettings";
+import ProfileVisibilitySettings from "./screens/ProfileVisibilitySettings";
 
 const Stack = createStackNavigator();
 
@@ -100,6 +103,16 @@ const App = () => {
               <Stack.Screen name="GigAdvertised" component={GigAdvertised} />
 
               <Stack.Screen name="ChangePassword" component={ChangePassword} />
+
+              <Stack.Screen
+                name="EnterEmailToResetPassword"
+                component={EnterEmailToResetPassword}
+              />
+
+              <Stack.Screen
+                name="ProfileVisibilitySettings"
+                component={ProfileVisibilitySettings}
+              />
             </>
           )}
         </Stack.Navigator>

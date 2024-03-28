@@ -37,6 +37,8 @@ const SettingsScreen = () => {
       navigation.navigate("LanguagePreferences");
     } else if (option === "Change password") {
       navigation.navigate("ChangePassword");
+    } else if (option === "Profile visibility settings") {
+      navigation.navigate("ProfileVisibilitySettings");
     } else {
       console.log("Option pressed:", option);
     }
@@ -59,7 +61,7 @@ const SettingsScreen = () => {
     ],
     "Privacy Settings": [
       "Public profile visibility",
-      "Data sharing preferences",
+      "Profile visibility settings",
     ],
     Support: ["Help centre/FAQs", "Contact support"],
     Legal: ["Terms of service", "Privacy policy", "Copyright information"],

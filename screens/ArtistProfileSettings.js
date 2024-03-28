@@ -152,6 +152,7 @@ const ArtistProfileSettings = () => {
 
                   if (!result.cancelled) {
                     setSelectedImage(result);
+                    console.log(result);
                   }
                 }}
               />

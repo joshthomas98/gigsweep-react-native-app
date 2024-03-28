@@ -124,10 +124,12 @@ const Login = () => {
             <TouchableOpacity
               style={{ marginTop: 10 }}
               onPress={() => {
-                navigation.navigate("ChangePassword");
+                navigation.navigate("EnterEmailToResetPassword");
               }}
             >
-              <Text style={{ textAlign: "center" }}>Forgot password</Text>
+              <Text style={{ textAlign: "center" }}>
+                Forgotten your password?
+              </Text>
             </TouchableOpacity>
 
             {showModal && (

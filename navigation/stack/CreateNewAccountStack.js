@@ -28,7 +28,7 @@ const CreateNewAccountStack = () => {
         component={MembershipPlans}
         options={({ navigation }) => ({
           title: "Membership Plans",
-          header: () => <CustomHeader title="Membership Plans" />, // Use CustomHeader
+          header: () => <CustomHeader title="Membership Plans" />,
         })}
       />
       <Stack.Screen
@@ -36,7 +36,7 @@ const CreateNewAccountStack = () => {
         component={ArtistRegister}
         options={({ navigation }) => ({
           title: "Artist Register",
-          header: () => <CustomHeader title="Artist Register" />, // Use CustomHeader
+          header: () => <CustomHeader title="Artist Register" />,
         })}
       />
       <Stack.Screen
@@ -44,7 +44,7 @@ const CreateNewAccountStack = () => {
         component={VenueRegister}
         options={({ navigation }) => ({
           title: "Venue Register",
-          header: () => <CustomHeader title="Venue Register" />, // Use CustomHeader
+          header: () => <CustomHeader title="Venue Register" />,
         })}
       />
       <Stack.Screen

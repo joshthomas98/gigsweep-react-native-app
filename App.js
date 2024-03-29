@@ -9,7 +9,6 @@ import CreateNewAccountStack from "./navigation/stack/CreateNewAccountStack";
 import NewsletterThankYou from "./screens/NewsletterThankyou";
 import ArtistProfileSettings from "./screens/ArtistProfileSettings";
 import ProfileSuccessfullyUpdated from "./screens/ProfileSuccessfullyUpdated";
-import MyBookings from "./screens/MyBookings";
 import ArtistAdvertiseGig from "./screens/ArtistAdvertiseGig";
 import AppVersion from "./screens/AppVersion";
 import HelpCentre from "./screens/HelpCentre";
@@ -70,8 +69,6 @@ const App = () => {
                 name="ProfileSuccessfullyUpdated"
                 component={ProfileSuccessfullyUpdated}
               />
-
-              <Stack.Screen name="MyBookings" component={MyBookings} />
 
               <Stack.Screen
                 name="ArtistAdvertiseGig"

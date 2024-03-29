@@ -59,10 +59,7 @@ const SettingsScreen = () => {
       "Manage push notifications",
       "Notification sound/vibration settings",
     ],
-    "Privacy Settings": [
-      "Public profile visibility",
-      "Profile visibility settings",
-    ],
+    "Privacy Settings": ["Profile visibility settings"],
     Support: ["Help centre/FAQs", "Contact support"],
     Legal: ["Terms of service", "Privacy policy", "Copyright information"],
   };

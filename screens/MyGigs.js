@@ -5,9 +5,12 @@ import {
   Text,
   FlatList,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import { globalStyles } from "../styles/global";
 import LoginContext from "../contexts/LoginContext";
+import { FontAwesome } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 
 const MyGigsScreen = ({ navigation }) => {
   const { userId, artistOrVenue } = useContext(LoginContext);
@@ -49,6 +52,18 @@ const MyGigsScreen = ({ navigation }) => {
     fetchGigs();
   }, [profileId, SERVER_BASE_URL, selectedTab]);
 
+  const handleTrashPress = () => {
+    if (selectedTab !== "Active") {
+      Alert.alert("Alert", "You cannot delete transferred or past gigs.");
+    }
+  };
+
+  const handleEditPress = () => {
+    if (selectedTab !== "Active") {
+      Alert.alert("Alert", "You cannot edit transferred or past gigs.");
+    }
+  };
+
   const renderGigs = (gigs) => {
     let tabDescription = "";
     switch (selectedTab) {
@@ -79,6 +94,24 @@ const MyGigsScreen = ({ navigation }) => {
             <Text
               style={styles.gigTitle}
             >{`${item.date_of_gig} - ${item.venue_name} - £${item.payment}`}</Text>
+            <View style={styles.iconContainer}>
+              <TouchableOpacity onPress={handleTrashPress}>
+                <FontAwesome
+                  style={{ marginRight: 8 }}
+                  name="trash-o"
+                  size={24}
+                  color="white"
+                />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={handleEditPress}>
+                <AntDesign
+                  style={{ marginLeft: 8 }}
+                  name="edit"
+                  size={24}
+                  color="white"
+                />
+              </TouchableOpacity>
+            </View>
             <Text style={styles.gigDetails}>{getGigDetails(item)}</Text>
           </View>
         )}
@@ -204,6 +237,15 @@ const styles = StyleSheet.create({
     color: "white",
     marginBottom: 45,
     textAlign: "center",
+  },
+  gigDetailsContainer: {
+    flexDirection: "column",
+    alignItems: "center",
+  },
+  iconContainer: {
+    flexDirection: "row",
+    marginTop: 20,
+    justifyContent: "center",
   },
 });
 

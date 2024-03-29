@@ -138,7 +138,7 @@ const ArtistUserProfile = () => {
         {userId === profileId && (
           <Button
             title="My Bookings"
-            onPress={() => navigation.navigate("MyBookings")}
+            onPress={() => navigation.navigate("MyGigs")}
           />
         )}
 

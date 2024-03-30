@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Alert,
 } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import { globalStyles } from "../styles/global";
 import LoginContext from "../contexts/LoginContext";
 import { FontAwesome } from "@expo/vector-icons";
@@ -15,10 +16,13 @@ import { AntDesign } from "@expo/vector-icons";
 const MyGigsScreen = ({ navigation }) => {
   const { userId, artistOrVenue } = useContext(LoginContext);
 
+  const navigate = useNavigation();
+
   const SERVER_BASE_URL = "http://localhost:8000/";
 
   const profileId = userId;
 
+  const [refreshFlag, setRefreshFlag] = useState(false); // State variable for triggering refresh
   const [activeGigs, setActiveGigs] = useState([]);
   const [transferredGigs, setTransferredGigs] = useState([]);
   const [pastGigs, setPastGigs] = useState([]);
@@ -50,11 +54,37 @@ const MyGigsScreen = ({ navigation }) => {
     };
 
     fetchGigs();
-  }, [profileId, SERVER_BASE_URL, selectedTab]);
+  }, [profileId, SERVER_BASE_URL, selectedTab, refreshFlag]); // Include refreshFlag in dependencies
 
-  const handleTrashPress = () => {
+  const handleTrashPress = async (id) => {
     if (selectedTab !== "Active") {
       Alert.alert("Alert", "You cannot delete transferred or past gigs.");
+    } else {
+      try {
+        const response = await fetch(
+          `${SERVER_BASE_URL}artist_listed_gigs/${id}/`,
+          {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        if (response.ok) {
+          setRefreshFlag(!refreshFlag); // Toggle refreshFlag to trigger refresh
+          navigation.navigate("GigDeletionSuccess");
+        } else {
+          throw new Error("Failed to delete gig");
+        }
+
+        // Optionally, you can handle success response
+        // const data = await response.json();
+        // Handle success
+      } catch (error) {
+        console.log(error);
+        // Handle error
+      }
     }
   };
 
@@ -95,7 +125,7 @@ const MyGigsScreen = ({ navigation }) => {
               style={styles.gigTitle}
             >{`${item.date_of_gig} - ${item.venue_name} - £${item.payment}`}</Text>
             <View style={styles.iconContainer}>
-              <TouchableOpacity onPress={handleTrashPress}>
+              <TouchableOpacity onPress={() => handleTrashPress(item.id)}>
                 <FontAwesome
                   style={{ marginRight: 8 }}
                   name="trash-o"
@@ -103,6 +133,7 @@ const MyGigsScreen = ({ navigation }) => {
                   color="white"
                 />
               </TouchableOpacity>
+
               <TouchableOpacity onPress={handleEditPress}>
                 <AntDesign
                   style={{ marginLeft: 8 }}

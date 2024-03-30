@@ -24,6 +24,7 @@ import ChangePassword from "./screens/ChangePassword";
 import EnterEmailToResetPassword from "./screens/EnterEmailToResetPassword";
 import DataSharingPreferences from "./screens/ProfileVisibilitySettings";
 import ProfileVisibilitySettings from "./screens/ProfileVisibilitySettings";
+import GigDeletionSuccess from "./screens/GigDeletionSuccess";
 
 const Stack = createStackNavigator();
 
@@ -109,6 +110,11 @@ const App = () => {
               <Stack.Screen
                 name="ProfileVisibilitySettings"
                 component={ProfileVisibilitySettings}
+              />
+
+              <Stack.Screen
+                name="GigDeletionSuccess"
+                component={GigDeletionSuccess}
               />
             </>
           )}

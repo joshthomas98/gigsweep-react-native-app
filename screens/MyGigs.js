@@ -12,6 +12,7 @@ import { globalStyles } from "../styles/global";
 import LoginContext from "../contexts/LoginContext";
 import { FontAwesome } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
+import DeleteGigModal from "../components/DeleteGigModal";
 
 const MyGigsScreen = ({ navigation }) => {
   const { userId, artistOrVenue } = useContext(LoginContext);
@@ -27,6 +28,9 @@ const MyGigsScreen = ({ navigation }) => {
   const [transferredGigs, setTransferredGigs] = useState([]);
   const [pastGigs, setPastGigs] = useState([]);
   const [selectedTab, setSelectedTab] = useState("Active");
+
+  const [modalShow, setModalShow] = useState(false);
+  const [gigIdToDelete, setGigIdToDelete] = useState(null);
 
   useEffect(() => {
     const fetchGigs = async () => {
@@ -56,41 +60,42 @@ const MyGigsScreen = ({ navigation }) => {
     fetchGigs();
   }, [profileId, SERVER_BASE_URL, selectedTab, refreshFlag]); // Include refreshFlag in dependencies
 
-  const handleTrashPress = async (id) => {
-    if (selectedTab !== "Active") {
-      Alert.alert("Alert", "You cannot delete transferred or past gigs.");
-    } else {
-      try {
-        const response = await fetch(
-          `${SERVER_BASE_URL}artist_listed_gigs/${id}/`,
-          {
-            method: "DELETE",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-
-        if (response.ok) {
-          setRefreshFlag(!refreshFlag); // Toggle refreshFlag to trigger refresh
-          navigation.navigate("GigDeletionSuccess");
-        } else {
-          throw new Error("Failed to delete gig");
-        }
-
-        // Optionally, you can handle success response
-        // const data = await response.json();
-        // Handle success
-      } catch (error) {
-        console.log(error);
-        // Handle error
-      }
-    }
+  const handleTrashPress = (id) => {
+    setModalShow(true);
+    setGigIdToDelete(id); // Store the id of the gig to delete
   };
 
   const handleEditPress = () => {
     if (selectedTab !== "Active") {
       Alert.alert("Alert", "You cannot edit transferred or past gigs.");
+    }
+  };
+
+  const handleDeleteGig = async (id) => {
+    try {
+      const response = await fetch(
+        `${SERVER_BASE_URL}artist_listed_gigs/${id}/`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.ok) {
+        setRefreshFlag(!refreshFlag); // Toggle refreshFlag to trigger refresh
+        navigation.navigate("GigDeletionSuccess");
+      } else {
+        throw new Error("Failed to delete gig");
+      }
+
+      // Optionally, you can handle success response
+      // const data = await response.json();
+      // Handle success
+    } catch (error) {
+      console.log(error);
+      // Handle error
     }
   };
 
@@ -125,23 +130,26 @@ const MyGigsScreen = ({ navigation }) => {
               style={styles.gigTitle}
             >{`${item.date_of_gig} - ${item.venue_name} - £${item.payment}`}</Text>
             <View style={styles.iconContainer}>
-              <TouchableOpacity onPress={() => handleTrashPress(item.id)}>
-                <FontAwesome
-                  style={{ marginRight: 8 }}
-                  name="trash-o"
-                  size={24}
-                  color="white"
-                />
-              </TouchableOpacity>
-
-              <TouchableOpacity onPress={handleEditPress}>
-                <AntDesign
-                  style={{ marginLeft: 8 }}
-                  name="edit"
-                  size={24}
-                  color="white"
-                />
-              </TouchableOpacity>
+              {selectedTab === "Active" && (
+                <TouchableOpacity onPress={() => handleTrashPress(item.id)}>
+                  <FontAwesome
+                    style={{ marginRight: 8 }}
+                    name="trash-o"
+                    size={24}
+                    color="white"
+                  />
+                </TouchableOpacity>
+              )}
+              {selectedTab === "Active" && (
+                <TouchableOpacity onPress={handleEditPress}>
+                  <AntDesign
+                    style={{ marginLeft: 8 }}
+                    name="edit"
+                    size={24}
+                    color="white"
+                  />
+                </TouchableOpacity>
+              )}
             </View>
             <Text style={styles.gigDetails}>{getGigDetails(item)}</Text>
           </View>
@@ -213,6 +221,17 @@ const MyGigsScreen = ({ navigation }) => {
       {selectedTab === "Active" && renderGigs(activeGigs)}
       {selectedTab === "Transferred" && renderGigs(transferredGigs)}
       {selectedTab === "Past" && renderGigs(pastGigs)}
+
+      {modalShow && (
+        <DeleteGigModal
+          visible={modalShow}
+          onClose={() => setModalShow(false)}
+          onDelete={() => {
+            handleDeleteGig(gigIdToDelete);
+            setModalShow(false);
+          }}
+        />
+      )}
     </View>
   );
 };
@@ -248,7 +267,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "white",
     marginTop: 15,
-    marginBottom: 5,
+    // marginBottom: 20,
     textAlign: "center",
   },
   gigDetails: {

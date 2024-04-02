@@ -25,6 +25,7 @@ import EnterEmailToResetPassword from "./screens/EnterEmailToResetPassword";
 import DataSharingPreferences from "./screens/ProfileVisibilitySettings";
 import ProfileVisibilitySettings from "./screens/ProfileVisibilitySettings";
 import GigDeletionSuccess from "./screens/GigDeletionSuccess";
+import DeleteGigModal from "./components/DeleteGigModal";
 
 const Stack = createStackNavigator();
 
@@ -116,6 +117,8 @@ const App = () => {
                 name="GigDeletionSuccess"
                 component={GigDeletionSuccess}
               />
+
+              <Stack.Screen name="DeleteGigModal" component={DeleteGigModal} />
             </>
           )}
         </Stack.Navigator>

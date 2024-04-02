@@ -32,6 +32,8 @@ const MyGigsScreen = ({ navigation }) => {
   const [modalShow, setModalShow] = useState(false);
   const [gigIdToDelete, setGigIdToDelete] = useState(null);
 
+  console.log(modalShow);
+
   useEffect(() => {
     const fetchGigs = async () => {
       try {

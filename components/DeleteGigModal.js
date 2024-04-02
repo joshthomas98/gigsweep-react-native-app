@@ -71,10 +71,10 @@ const styles = StyleSheet.create({
     textAlign: "center", // Center text within the button
   },
   buttonYes: {
-    backgroundColor: "green",
+    backgroundColor: "#4CAF50", // Nice shade of green
   },
   buttonNo: {
-    backgroundColor: "red",
+    backgroundColor: "#EF5350", // Nice shade of red
   },
 });
 

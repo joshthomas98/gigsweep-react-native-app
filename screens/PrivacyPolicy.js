@@ -4,7 +4,7 @@ import CustomHeader from "../components/CustomHeader";
 
 const PrivacyPolicy = () => {
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <CustomHeader title="GigSweep Privacy Policy" />
       <ScrollView contentContainerStyle={styles.contentContainer}>
         <View style={styles.content}>
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
   contentContainer: {
     flexGrow: 1,
     paddingHorizontal: 20,
-    paddingTop: 57,
+    paddingTop: 12,
   },
   content: {
     flex: 1,

@@ -32,8 +32,6 @@ const MyGigsScreen = ({ navigation }) => {
   const [modalShow, setModalShow] = useState(false);
   const [gigIdToDelete, setGigIdToDelete] = useState(null);
 
-  console.log(modalShow);
-
   useEffect(() => {
     const fetchGigs = async () => {
       try {
@@ -71,6 +69,10 @@ const MyGigsScreen = ({ navigation }) => {
     if (selectedTab !== "Active") {
       Alert.alert("Alert", "You cannot edit transferred or past gigs.");
     }
+  };
+
+  const handleSeeMoreDetailsPress = () => {
+    navigation.navigate("IndividualGigDetails");
   };
 
   const handleDeleteGig = async (id) => {
@@ -128,9 +130,10 @@ const MyGigsScreen = ({ navigation }) => {
             {index === 0 && (
               <Text style={styles.activeTabAbout}>{tabDescription}</Text>
             )}
-            <Text
-              style={styles.gigTitle}
-            >{`${item.date_of_gig} - ${item.venue_name} - £${item.payment}`}</Text>
+            <View style={styles.lineSeparator}></View>
+            <Text style={styles.gigTitle}>
+              {`${item.date_of_gig} - ${item.venue_name} - £${item.payment}`}
+            </Text>
             <View style={styles.iconContainer}>
               {selectedTab === "Active" && (
                 <TouchableOpacity onPress={() => handleTrashPress(item.id)}>
@@ -154,6 +157,12 @@ const MyGigsScreen = ({ navigation }) => {
               )}
             </View>
             <Text style={styles.gigDetails}>{getGigDetails(item)}</Text>
+            <TouchableOpacity
+              style={styles.detailsButton}
+              onPress={() => handleSeeMoreDetailsPress(item)}
+            >
+              <Text style={styles.detailsButtonText}>See more details</Text>
+            </TouchableOpacity>
           </View>
         )}
         ListEmptyComponent={() => (
@@ -260,7 +269,8 @@ const styles = StyleSheet.create({
     color: "white",
   },
   gigItem: {
-    padding: 20,
+    paddingHorizontal: 20,
+    paddingBottom: 30,
     borderBottomWidth: 1,
     borderBottomColor: "#ccc",
   },
@@ -298,6 +308,24 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     marginTop: 20,
     justifyContent: "center",
+  },
+  detailsButton: {
+    marginTop: 10,
+    backgroundColor: "#007AFF",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+    alignSelf: "center", // Align button in center horizontally
+  },
+  detailsButtonText: {
+    color: "white",
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  lineSeparator: {
+    height: 1,
+    backgroundColor: "white",
+    marginBottom: 15,
   },
 });
 

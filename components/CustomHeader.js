@@ -12,7 +12,7 @@ const CustomHeader = ({ title }) => {
         onPress={() => navigation.goBack()}
         style={styles.backButton}
       >
-        <Ionicons name="arrow-back-outline" size={24} color="black" />
+        <Ionicons name="arrow-back-outline" size={30} color="black" />
       </TouchableOpacity>
       <Text style={styles.title}>{title}</Text>
     </View>
@@ -24,11 +24,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    position: "absolute",
-    top: 45,
-    left: 0,
-    right: 0,
-    height: 60, // Adjust height as needed
+    paddingBottom: 20,
     backgroundColor: "#fff", // Set background color
     zIndex: 1000, // Ensure it's above other content
     borderBottomWidth: 1, // Add bottom border
@@ -37,10 +33,12 @@ const styles = StyleSheet.create({
   backButton: {
     position: "absolute",
     left: 10,
+    bottom: 15,
   },
   title: {
     fontSize: 20,
     fontWeight: "bold",
+    marginTop: 5,
   },
 });
 

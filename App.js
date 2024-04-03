@@ -26,6 +26,7 @@ import DataSharingPreferences from "./screens/ProfileVisibilitySettings";
 import ProfileVisibilitySettings from "./screens/ProfileVisibilitySettings";
 import GigDeletionSuccess from "./screens/GigDeletionSuccess";
 import DeleteGigModal from "./components/DeleteGigModal";
+import IndividualGigDetails from "./screens/IndividualGigDetails";
 
 const Stack = createStackNavigator();
 
@@ -119,6 +120,11 @@ const App = () => {
               />
 
               <Stack.Screen name="DeleteGigModal" component={DeleteGigModal} />
+
+              <Stack.Screen
+                name="IndividualGigDetails"
+                component={IndividualGigDetails}
+              />
             </>
           )}
         </Stack.Navigator>

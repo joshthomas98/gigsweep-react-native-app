@@ -4,7 +4,7 @@ import CustomHeader from "../components/CustomHeader";
 
 const HelpCentre = () => {
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <CustomHeader title="Help Center / FAQs" />
       <ScrollView contentContainerStyle={styles.contentContainer}>
         <View style={styles.content}>
@@ -107,12 +107,10 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     flexGrow: 1,
-    paddingTop: 20,
     paddingHorizontal: 20,
   },
   content: {
     flex: 1,
-    marginTop: 20,
   },
   section: {
     marginBottom: 20,

@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
   },
   sectionContainer: {
     paddingHorizontal: 20,
-    // marginBottom: 20,
+    marginBottom: 20,
   },
   sectionTitle: {
     fontSize: 20,
